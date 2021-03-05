@@ -1,15 +1,15 @@
 const express = require("express");
 const scetch = require("scetch")();
 
-const app = express();
-const port = 80;
-const addr = "127.10.1.1";
+let app = express();
 
-app.set('views', 'views');
+app.set('views', 'lab2/views');
 app.engine('sce', scetch.engine);
 app.set('view engine', 'sce');
 
 app.get("/", (_, res) => {
+    // res.send(app.engine().render(index, {}));
+    // res.end();
     res.render("index", {});
 });
 
@@ -20,6 +20,4 @@ app.get("/*", (req, res) => {
     });
 });
 
-app.listen(port, addr, () => {
-    console.log(`Example app listening at http://${addr}:${port}`);
-});
+module.exports = app;
