@@ -1,3 +1,7 @@
+# Project Instruction Sheets
+pdf instructions/**/*
+!pdf instructions/.empty
+
 # Logs
 logs
 *.log
