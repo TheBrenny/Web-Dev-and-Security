@@ -6,9 +6,10 @@ const config = require('./config');
 const host = config.serverInfo.host;
 
 gulp.task("sass", function () {
-    return gulp.src("app/public/assets/scss/**/*.scss")
+    console.log("You need to make the output files relative to the input files!!");
+    return gulp.src("assets/scss/**/*.scss")
         .pipe(sass().on("error", sass.logError))
-        .pipe(gulp.dest("app/public/assets/css/"))
+        .pipe(gulp.dest("assets/css/"))
         .pipe(browserSync.reload({
             stream: true
         }));
@@ -49,7 +50,7 @@ gulp.task("nodemon", function (cb) {
     });
 });
 gulp.task("watch", gulp.series("sass", function (cb) {
-    gulp.watch("app/public/assets/scss/**/*.scss", gulp.series("sass"));
+    gulp.watch("assets/scss/**/*.scss", gulp.series("sass"));
     console.log("Watching SCSS!");
     cb();
 }));

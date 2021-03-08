@@ -48,6 +48,6 @@ mainApp.use(require("./errorRouter").handler);
 
 // LISTEN!
 mainApp.listen(serverInfo.port, serverInfo.host, () => {
-    if (process.env.NODE_ENV === 'dev' && process.env.GUPLING == 'true') serverInfo.port = 81;
+    if (process.env.NODE_ENV.startsWith('dev') && process.env.GUPLING == 'true') serverInfo.port = 81;
     console.log(`Server is listening at http://${serverInfo.host}:${serverInfo.port}...`);
 });

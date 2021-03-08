@@ -19,8 +19,11 @@ module.exports.handler = (err, req, res, next) => {
 
     let e = {
         statusCode: statusCode,
-        message: err.message + "\nStack:\n" + err.stack // don't send the stack because of security risk!
+        message: err.message
     };
+
+    // don't send the stack because of security risk!
+    if (!process.env.NODE_ENV.startsWith('prod')) e.message += "\nStack:\n" + err.stack;
 
     if (req.accepts("text/html")) {
         res.render("error", e);
