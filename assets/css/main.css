@@ -1,13 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa&display=swap");
 html,
 body {
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  background: #FBF5F3;
+  font-family: 'Comfortaa', 'Roboto';
+  background: #F7F5F3;
   color: #001524; }
 
 a {
   color: #559CAD; }
   a:hover {
     color: #FE9E72; }
+
+.container, .wrapper, .box {
+  box-sizing: border-box; }
 
 .container {
   width: 100%;
@@ -17,7 +21,8 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column; }
+  flex-direction: column;
+  box-sizing: border-box; }
 
 .wrapper {
   min-width: 500px;

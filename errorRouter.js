@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const isProd = !(process.env.NODE_ENV && process.env.NODE_ENV.startsWith('dev'));
 
 // 404
 router.use((req, res, _) => {
@@ -23,7 +24,7 @@ module.exports.handler = (err, req, res, next) => {
     };
 
     // don't send the stack because of security risk!
-    if (!process.env.NODE_ENV.startsWith('prod')) e.message += "\nStack:\n" + err.stack;
+    if (!isProd) e.message += "\nStack:\n" + err.stack;
 
     if (req.accepts("text/html")) {
         res.render("error", e);

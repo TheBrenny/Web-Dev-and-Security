@@ -1,0 +1,47 @@
+body {
+  background: #335f69; }
+
+.loginBox {
+  background: #559CAD;
+  width: 400px;
+  border-radius: 1em;
+  padding: 1.5em;
+  display: flex;
+  flex-flow: column;
+  gap: 0.5em;
+  font-size: 1.25em; }
+  .loginBox > h1 {
+    text-align: center; }
+  .loginBox label {
+    position: relative;
+    pointer-events: none;
+    top: -43.5px;
+    left: 4px;
+    transition: 0.2s ease all;
+    height: 0;
+    opacity: 0.6; }
+  .loginBox input {
+    width: 100%;
+    height: 2.5em;
+    font-size: 1em;
+    background: #e3dcd4;
+    padding: 0.2em;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #001524;
+    box-shadow: none; }
+    .loginBox input:focus {
+      border-color: #FE9E72;
+      border-width: 2px; }
+    .loginBox input:focus + label,
+    .loginBox input:not(:focus):valid + label {
+      opacity: 1;
+      top: -53.5px;
+      left: 4px;
+      font-size: 0.5em; }
+    .loginBox input[type="submit"] {
+      border-width: 0px;
+      transition: 0.2s ease all;
+      cursor: pointer; }
+      .loginBox input[type="submit"]:hover {
+        background: #FE9E72; }
