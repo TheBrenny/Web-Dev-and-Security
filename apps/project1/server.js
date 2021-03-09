@@ -3,9 +3,11 @@ const scetch = require("scetch")();
 
 let app = express();
 
-app.set('views', 'lab2/views');
+app.set('views', 'apps/project1/views');
 app.engine('sce', scetch.engine);
 app.set('view engine', 'sce');
+
+app.use("/assets", express.static(__dirname + '/assets'));
 
 app.get("/", (_, res) => {
     // res.send(app.engine().render(index, {}));

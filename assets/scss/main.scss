@@ -2,6 +2,7 @@
 
 html,
 body {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     background: $white;
     color: $black;
 }
@@ -30,10 +31,11 @@ a {
     width: 70%;
     display: flex;
     justify-content: center;
+    gap: 1em;
 }
 
 .box {
-    width: 100px;
+    width: 250px;
     height: 2em;
     text-align: center;
     line-height:2em;
@@ -44,7 +46,7 @@ a {
     transition: all 0.14s ease-out;
 
     &:hover {
-        background: change-color($black, $alpha: 0.25);
+        background: change-color($black, $alpha: 0.05);
         transform: scale(1.2);
     }
 }

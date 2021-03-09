@@ -1,5 +1,6 @@
 html,
 body {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   background: #FBF5F3;
   color: #001524; }
 
@@ -22,10 +23,11 @@ a {
   min-width: 500px;
   width: 70%;
   display: flex;
-  justify-content: center; }
+  justify-content: center;
+  gap: 1em; }
 
 .box {
-  width: 100px;
+  width: 250px;
   height: 2em;
   text-align: center;
   line-height: 2em;
@@ -35,5 +37,5 @@ a {
   transform: scale(1);
   transition: all 0.14s ease-out; }
   .box:hover {
-    background: rgba(0, 21, 36, 0.25);
+    background: rgba(0, 21, 36, 0.05);
     transform: scale(1.2); }

@@ -26,11 +26,7 @@ mainApp.set('view engine', 'sce');
 mainApp.use("/assets", express.static(path.join(__dirname, "assets")));
 
 // Generate app listing
-let allApps = [{
-    display: "Lab 2",
-    slug: "lab2",
-    app: require("./lab2/server.js")
-}];
+let allApps = require("./apps/meta.js");
 
 for (let a of allApps) {
     mainApp.use("/" + a.slug, a.app);

@@ -1,15 +1,19 @@
+const path = require('path');
 const gulp = require('gulp');
 const sass = require('gulp-sass');
+const rename = require('gulp-rename');
 const browserSync = require('browser-sync').create();
 const nodemon = require('gulp-nodemon');
 const config = require('./config');
 const host = config.serverInfo.host;
 
 gulp.task("sass", function () {
-    console.log("You need to make the output files relative to the input files!!");
-    return gulp.src("assets/scss/**/*.scss")
+    return gulp.src(["**/assets/scss/**/*.scss"])
         .pipe(sass().on("error", sass.logError))
-        .pipe(gulp.dest("assets/css/"))
+        .pipe(rename(function (f) {
+            f.dirname = path.join(path.dirname(f.dirname), "css");
+        }))
+        .pipe(gulp.dest("./"))
         .pipe(browserSync.reload({
             stream: true
         }));
@@ -50,7 +54,7 @@ gulp.task("nodemon", function (cb) {
     });
 });
 gulp.task("watch", gulp.series("sass", function (cb) {
-    gulp.watch("assets/scss/**/*.scss", gulp.series("sass"));
+    gulp.watch("**/assets/scss/**/*.scss", gulp.series("sass"));
     console.log("Watching SCSS!");
     cb();
 }));
