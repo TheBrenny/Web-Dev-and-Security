@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const isProd = !(process.env.NODE_ENV && process.env.NODE_ENV.startsWith('dev'));
+const isProd = !(require("./config").env.isDev);
 
 // 404
 router.use((req, res, _) => {
