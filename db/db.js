@@ -4,6 +4,9 @@ let mysql = require("mysql2/promise");
 const fs = require('fs');
 const config = require('../config');
 
+const session = require("express-session");
+const MySQLStore = require("express-mysql-session")(session);
+
 const dbFolder = path.join(__dirname);
 const sqlFolder = path.join(dbFolder, "sql");
 const templateFolder = path.join(dbFolder, "templates");
@@ -21,13 +24,16 @@ module.exports = (async function () {
     return global.db;
 })();
 
-let dbOps = ["query"];
+let dbOps = ["query", "end"];
 dbOps.forEach(op => {
-    module.exports[op] = async function () {
+    global.db[op] = module.exports[op] = async function () {
         let theDB = (await global.db);
         return theDB[op].apply(theDB, arguments);
     };
 });
+
+
+module.exports.sessionStore = new MySQLStore({}, global.db);
 
 module.exports.sqlFolder = sqlFolder;
 module.exports.sqlFromFile = function (filename) {

@@ -4,6 +4,10 @@ const isDevSwitch = false;
 
 module.exports = {};
 
+module.exports.db = {
+    url: process.env.MYSQL_URL || process.env.JAWSDB_URL
+};
+
 module.exports.env = {
     node: process.env.NODE_ENV || "production",
     deploy: process.env.DEPLOY || "local",
@@ -12,21 +16,22 @@ module.exports.env = {
 };
 module.exports.env.isDev = module.exports.env.node.startsWith("dev") || module.exports.env.deploy.startsWith("local") || isDevSwitch;
 
+module.exports.helmet = !module.exports.env.gulping ? {} : {
+    contentSecurityPolicy: false
+};
+
 module.exports.morgan = {
     stream: process.env.IS_VSCODE ? {
         write: console.log
     } : process.stdout
 };
 
-module.exports.helmet = !module.exports.env.gulping ? {} : {
-    contentSecurityPolicy: false
-};
 
 module.exports.serverInfo = {
     host: process.env.HOST || "localhost",
     port: process.env.PORT || 80,
 };
 
-module.exports.db = {
-    url: process.env.MYSQL_URL || process.env.JAWSDB_URL
+module.exports.session = {
+    secret: process.env.SESSION_SECRET || "secret"
 };
