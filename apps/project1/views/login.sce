@@ -9,7 +9,9 @@
         <label for="password">Password</label>
         <input type="submit" value="Login">
         [[?= badLogin ]]
-        <p>Invalid username or password. Try again!</p>
+            <div class="error">
+                <p>Invalid username or password. Try again!</p>
+            </div>
         [[?==]]
     </form>
 </div>

@@ -1,5 +1,15 @@
 body {
-  background: #3b6e7a; }
+  background: radial-gradient(#3b6e7a, #2a4f58); }
+
+.error {
+  background: #E85F5C;
+  text-align: center;
+  border-radius: 0.5em;
+  padding: 1em 0.5em;
+  font-size: 0.75em;
+  margin-top: 0.75em; }
+  .error > p {
+    margin: 0; }
 
 .loginBox {
   background: #559CAD;
@@ -8,14 +18,14 @@ body {
   padding: 1.5em;
   display: flex;
   flex-flow: column;
-  gap: 0.5em;
+  gap: 0.15em;
   font-size: 1.25em; }
   .loginBox > h1 {
     text-align: center; }
   .loginBox label {
     position: relative;
     pointer-events: none;
-    top: -43.5px;
+    top: -37.5px;
     left: 4px;
     transition: 0.2s ease all;
     height: 0;
@@ -35,7 +45,7 @@ body {
       border-width: 2px; }
     .loginBox input:focus + label,
     .loginBox input:not(:focus):valid + label {
-      top: -53.5px;
+      top: -47.5px;
       left: 4px;
       font-size: 0.5em; }
     .loginBox input[type="text"], .loginBox input[type="password"] {
