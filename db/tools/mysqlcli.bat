@@ -1,0 +1,1 @@
+docker exec -it wdsmysql mysql -u user -ppass wds %*
