@@ -1,5 +1,5 @@
 body {
-  background: #335f69; }
+  background: #3b6e7a; }
 
 .loginBox {
   background: #559CAD;
@@ -35,10 +35,11 @@ body {
       border-width: 2px; }
     .loginBox input:focus + label,
     .loginBox input:not(:focus):valid + label {
-      opacity: 1;
       top: -53.5px;
       left: 4px;
       font-size: 0.5em; }
+    .loginBox input[type="text"], .loginBox input[type="password"] {
+      padding-top: 0.75em; }
     .loginBox input[type="submit"] {
       border-width: 0px;
       transition: 0.2s ease all;

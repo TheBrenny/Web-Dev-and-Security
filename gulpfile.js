@@ -54,7 +54,7 @@ gulp.task("nodemon", function (cb) {
     });
 });
 gulp.task("watch", gulp.series("sass", function (cb) {
-    gulp.watch("**/assets/scss/**/*.scss", gulp.series("sass"));
+    gulp.watch("./**/assets/scss/**/*.scss", gulp.series("sass"));
     console.log("Watching SCSS!");
     cb();
 }));

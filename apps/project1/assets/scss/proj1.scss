@@ -48,10 +48,14 @@ body {
 
         &:focus+label,
         &:not(:focus):valid+label {
-            opacity: 1;
             top: -53.5px;
             left: 4px;
             font-size: 0.5em;
+        }
+
+        &[type="text"],
+        &[type="password"] {
+            padding-top: 0.75em;
         }
 
         &[type="submit"] {
