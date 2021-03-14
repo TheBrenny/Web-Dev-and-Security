@@ -1,7 +1,7 @@
 [[i= partials/header ]]
 
 <div class="container">
-    <form class="loginBox" method="POST" action="/project1/login">
+    <form enctype="application/json" class="loginBox" method="POST" action="/project1/login">
         <h1>Login</h1>
         <input type="text" name="username" required />
         <label for="username">Username</label>
