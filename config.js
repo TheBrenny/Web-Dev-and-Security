@@ -2,6 +2,8 @@ require("dotenv").config();
 
 const isDevSwitch = false;
 
+module.exports = {};
+
 module.exports.env = {
     node: process.env.NODE_ENV || "production",
     deploy: process.env.DEPLOY || "local",
@@ -10,13 +12,10 @@ module.exports.env = {
 };
 module.exports.env.isDev = module.exports.env.node.startsWith("dev") || module.exports.env.deploy.startsWith("local") || isDevSwitch;
 
-module.exports = {
-    morgan: {
-        stream: process.env.IS_VSCODE ? {
-            write: console.log
-        } : process.stdout
-    },
-    helmet: {}
+module.exports.morgan = {
+    stream: process.env.IS_VSCODE ? {
+        write: console.log
+    } : process.stdout
 };
 
 module.exports.helmet = !module.exports.env.gulping ? {} : {
