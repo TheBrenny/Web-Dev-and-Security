@@ -1,0 +1,62 @@
+@import './variables';
+
+$navHeight: 3.5em;
+$navLineSpeed: 0.125s;
+$navLineHeightMin: 0.1em;
+$navLineHeightMax: 0.3em;
+
+.navbar {
+    width: 100%;
+    background:
+        radial-gradient(75% 50% at bottom, rgba(0, 0, 0, 0.2) 0%, transparent 30%),
+        linear-gradient(180deg, $main 50%, darken($main, 15%) 125%);
+    position: fixed;
+    top: 0;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: space-between;
+    height: $navHeight;
+
+    .logo {
+        width: 100px;
+        text-align: center;
+        flex-grow: 0;
+        margin: 0px 2em;
+    }
+
+    nav {
+        display: flex;
+        flex-flow: row;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+
+        .navItem {
+            background: rgba(0,0,0,0.2);
+            border: 0em solid $black;
+            padding-bottom: $navLineHeightMax;
+            border-bottom-width: $navLineHeightMin;
+            border-color: $red;
+            transition: padding $navLineSpeed ease, border $navLineSpeed ease;
+            color: $black;
+            text-decoration: none;
+            flex-grow: 1;
+            flex-basis: 100px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &.navActive {
+                background: rgba(255,255,255,0.2);
+            }
+
+            &:hover, &.navActive {
+                padding-bottom: $navLineHeightMin;
+                border-bottom-width: $navLineHeightMax;
+                border-color: $accent;
+            }
+        }
+    }
+}

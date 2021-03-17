@@ -1,8 +1,26 @@
 @import './variables';
 
+$headerSizeBig: 120px;
+$headerSizeSmall: 70px;
+
 body {
-    background: radial-gradient(darken($main, 15%), darken($main, 25%));
+    background: $white;
 }
+
+.header-outer {
+    display: flex;
+    align-items: center;
+    position: sticky;
+    height: $headerSizeBig;
+    top: $headerSizeSmall - $headerSizeBig;
+
+    .header-inner {
+        height: $headerSizeSmall;
+        position: sticky;
+        top: 0;
+    }
+}
+
 
 .error {
     background: $red;
@@ -17,10 +35,9 @@ body {
     }
 }
 
-.loginBox {
+.displayBox {
     background: $main;
     width: 400px;
-    // height: 400px;
     border-radius: 1em;
     padding: 1.5em;
     display: flex;

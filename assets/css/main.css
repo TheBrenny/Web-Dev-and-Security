@@ -19,10 +19,11 @@ a {
   padding: 0;
   margin: 0;
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
   box-sizing: border-box; }
+  .container.center {
+    justify-content: center;
+    align-items: center; }
 
 .wrapper {
   min-width: 500px;
