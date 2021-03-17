@@ -1,6 +1,6 @@
 [[i= partials/header ]]
 
-<div class="container" style="font-size: 2rem;">
+<div class="container center" style="font-size: 2rem;">
     <div class="wrapper">
         <h1>Welcome!</h1>
     </div>

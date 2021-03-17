@@ -1,7 +1,8 @@
 [[i= partials/header ]]
+[[i= partials/navbar ]]
 
-<div class="container">
-    <form enctype="application/json" class="loginBox" method="POST" action="/project1/login">
+<div class="container center">
+    <form enctype="application/json" class="loginBox displayBox" method="POST" action="/project1/login">
         <h1>Login</h1>
         <input type="text" name="username" required />
         <label for="username">Username</label>
