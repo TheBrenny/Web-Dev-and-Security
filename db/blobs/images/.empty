@@ -1,0 +1,6 @@
+We need to ensure that this folder exists because it's used to store images from the DB.
+
+There should be a demo script which you can run which will:
+ - clean the database,
+ - run the install and demo SQL scripts on the DB
+ - download demo images,
