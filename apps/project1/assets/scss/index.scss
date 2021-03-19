@@ -1,1 +1,45 @@
 @import './variables';
+
+.header {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 2em;
+
+    img.logo {
+        max-width: 500px;
+        width: 80%;
+    }
+}
+
+.container {
+    padding: 2em;
+}
+
+.app {
+    display: flex;
+    flex-flow: row;
+    gap: 2em;
+    flex-grow: 1;
+    width: 100%;
+
+    .homeBlock {
+        background: rgba(200, 200, 200, 0.3);
+        border-radius: 2em;
+        flex-basis: 50%;
+        flex-grow: 1;
+        text-align: center;
+
+        h1 {
+            height: 75px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .app {
+        flex-flow: column;
+    }
+}

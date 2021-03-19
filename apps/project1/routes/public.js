@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const checks = require("./checks");
 const session = require("./session");
+const Database = require("../../../db/database");
 
 function getNavList(req) {
     let isAuthed = session(req).isAuthed();
@@ -35,18 +36,32 @@ function getNavList(req) {
 
 router.get("/", (req, res) => {
     res.render("index", {
-        navList: getNavList(req)
+        navList: getNavList(req),
+        listings: Database.getRandomAvailableProducts()
     });
 });
 
 router.get("/listings", (req, res) => {
     res.render("listings", {
-        navList: getNavList(req)
+        navList: getNavList(req),
+        listings: Database.getAvailableProducts()
+    });
+});
+
+router.get("/listings/search/:query/all?", (req, res) => {
+    //do a like search and return results
+    res.render("listings", {
+        navList: getNavList(req),
+        listings: Database.getAllProducts(req.params.query)
     });
 });
 
 router.get("/listings/search/:query", (req, res) => {
     //do a like search and return results
+    res.render("listings", {
+        navList: getNavList(req),
+        listings: Database.getAvailableProducts(req.params.query)
+    });
 });
 
 router.get("/login", checks.isGuest, (req, res) => {
@@ -72,7 +87,7 @@ router.post("/login", checks.isGuest, async (req, res) => {
     } = req.body;
 
     let bad = false;
-    let target = (await db.query(`SELECT id, username, plainPassword, password, active FROM users WHERE username="${username}" AND active=1`))[0]; // the zeroth index is the actual set of results
+    let target = (await Database.getUser(username));
 
     // found user
     if (target.length > 0) {
