@@ -11,7 +11,7 @@ CREATE TABLE `products` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(50) NOT NULL,
   `description` VARCHAR(500) DEFAULT '',
-  `image` VARCHAR(500) DEFAULT 'defaultImage.png', -- This is appended to the image path
+  `image` VARCHAR(500) DEFAULT 'defaultImage.svg', -- This is appended to the image path
   `owner` INTEGER NOT NULL,
   `cost` DECIMAL(8,2) NOT NULL,
   `quantity` INTEGER DEFAULT 1,
