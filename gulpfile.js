@@ -9,8 +9,8 @@ const host = config.serverInfo.host;
 
 // [a] because that way the directory structure is maintained!
 const sassGlobs = [
-    "./[a]ssets/scss/**/*.scss",
-    "./[a]pps/*/assets/scss/**/*.scss"
+    "./[aa]ssets/scss/**/*.scss",
+    "./[aa]pps/**/assets/scss/**/*.scss"
 ];
 function globSass(globPath) {
     return gulp.src(globPath)
@@ -31,7 +31,6 @@ gulp.task("sass", function (cb) {
             .on("error", reject);
     }));
     Promise.all(streams)
-        .then(() => console.log(streams))
         .then(() => cb())
         .catch(err => console.log(err) && cb(err));
 });
@@ -71,7 +70,9 @@ gulp.task("nodemon", function (cb) {
     });
 });
 gulp.task("watch", gulp.series("sass", function (cb) {
-    gulp.watch(sassGlobs, gulp.series("sass"));
+    sassGlobs.forEach((glob) => {
+        gulp.watch(glob, gulp.series("sass"));
+    });
     console.log("Watching SCSS!");
     cb();
 }));
