@@ -21,7 +21,7 @@ function getAccount() {
 }
 
 function setAccount(id, name) {
-    if(id < 0 || id == null) {
+    if (id < 0 || id == null) {
         this.account = Object.assign({}, sessionSchema.account);
     } else {
         this.getAccount().id = id;
@@ -44,9 +44,23 @@ function isBadLogin() {
     this.getAccount().badLogin = false;
     return b;
 }
+
 function badLogin() {
+    setAccount.call(this);
     this.getAccount().badLogin = true;
 }
+
+function isBadRegister() {
+    let b = this.badReg;
+    this.badReg = false;
+    return b;
+}
+
+function badRegister() {
+    setAccount.call(this);
+    this.badReg = true;
+}
+
 
 const functions = {
     add,
@@ -57,10 +71,12 @@ const functions = {
     isAuthed,
     isBadLogin,
     badLogin,
+    isBadRegister,
+    badRegister,
 };
 
 module.exports = function (req) {
     let func = {};
     for (let f in functions) func[f] = functions[f].bind(req.session);
-    return Object.assign({}, req.session, functions);
+    return Object.assign(req.session, functions);
 };

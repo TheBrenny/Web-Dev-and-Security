@@ -13,6 +13,7 @@
 
 .container {
     padding: 2em;
+    height: revert;
 }
 
 .app {
@@ -25,6 +26,7 @@
     .homeBlock {
         background: rgba(200, 200, 200, 0.3);
         border-radius: 2em;
+        padding: 1em;
         flex-basis: 50%;
         flex-grow: 1;
         text-align: center;
@@ -34,11 +36,77 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            margin: 0.5em;
+            margin-top: 0.25em;
+        }
+
+        .homeBlockInner {
+            gap: 1em;
+            justify-content: center;
+
+            >* {
+                margin: 0;
+            }
+
+            .homeBlockLogin {
+                flex-flow: row;
+                gap: 1em;
+
+                >* {
+                    flex: 50% 1 1;
+                }
+            }
         }
     }
 }
 
-@media screen and (max-width: 600px) {
+.listing {
+    display: block;
+    border-radius: 2px;
+    background: #fff;
+    color: #212121;
+    height: 100%;
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.16), 0 4px 14px 0 rgba(0, 0, 0, 0.12);
+    text-shadow: none;
+    width: 200px;
+    text-decoration: none;
+    transform: scale(1);
+    transition: all 0.15s ease;
+    z-index: 0;
+
+    &:hover {
+        transform: scale(1.07);
+        z-index: 1;
+    }
+
+    .listingImage {
+        object-fit: cover;
+        height: 200px;
+        margin: auto;
+        display: block;
+    }
+
+    .listingCaption {
+        height: 50px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        flex-flow: column;
+        padding: 0.3em;
+
+        >* {
+            margin: 0;
+        }
+
+        >[type="price"] {
+            font-weight: normal;
+        }
+    }
+}
+
+
+
+@media screen and (max-width: 650px) {
     .app {
         flex-flow: column;
     }

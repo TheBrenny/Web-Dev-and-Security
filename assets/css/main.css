@@ -10,7 +10,9 @@ a {
   a:hover {
     color: #FE9E72; }
 
-.container, .wrapper, .box {
+.container,
+.wrapper,
+.box {
   box-sizing: border-box; }
 
 .container {
@@ -45,3 +47,6 @@ a {
   .box:hover {
     background: rgba(0, 21, 36, 0.05);
     transform: scale(1.2); }
+
+.flex {
+  display: flex; }

@@ -3,6 +3,14 @@
 $headerSizeBig: 120px;
 $headerSizeSmall: 70px;
 
+hr {
+    width: 100%;
+    height: 1px;
+    border: none;
+    background: #000;
+    background: linear-gradient(90deg, change-color($accent, $alpha: 0) 0%, change-color($accent, $alpha: 0.75) 20% 80%, change-color($accent, $alpha: 0) 100%);
+}
+
 body {
     background: $white;
 }
@@ -48,56 +56,88 @@ body {
     >h1 {
         text-align: center;
     }
+}
 
-    label {
-        position: relative;
-        pointer-events: none;
-        top: -37.5px;
-        left: 4px;
-        transition: 0.2s ease all;
-        height: 0;
-        opacity: 0.6;
-    }
+label {
+    position: relative;
+    pointer-events: none;
+    top: -37.5px;
+    left: 4px;
+    transition: 0.2s ease all;
+    height: 0;
+    opacity: 0.6;
+}
 
-    input {
-        width: 100%;
-        // background: $white;
-        height: 2.5em;
-        font-size: 1em;
-        background: darken($white, 10);
-        padding: 0.2em;
+input,
+select {
+    background: darken($white, 10);
+    width: 100%;
+    transition: 0.2s ease border;
+    height: 2.5em;
+    font-size: 1em;
+    padding: 0.3em;
+    outline: none;
+    border: none;
+    border-bottom: 0.2em solid rgba($accent, 0);
+    border-radius: 0.2em;
+    box-shadow: none;
+    display: block;
+
+    &:focus {
+        border-bottom: 0.2em solid $accent;
         outline: none;
-        border: none;
-        border-bottom: 1px solid $black;
-        box-shadow: none;
-
-        &:focus {
-            border-color: $accent;
-            border-width: 2px;
-        }
-
-        &:focus+label,
-        &:not(:focus):valid+label {
-            top: -47.5px;
-            left: 4px;
-            font-size: 0.5em;
-        }
-
-        &[type="text"],
-        &[type="password"] {
-            padding-top: 0.75em;
-        }
-
-        &[type="submit"] {
-            border-width: 0px;
-            transition: 0.2s ease all;
-            cursor: pointer;
-
-            &:hover {
-                background: $accent;
-            }
-        }
     }
 
+    &:focus+label,
+    &:not(:focus):valid+label {
+        top: -48px;
+        left: 6px;
+        font-size: 0.5em;
+    }
 
+    &[type="text"],
+    &[type="password"] {
+        padding-top: 1em;
+    }
+
+    &[type="submit"] {
+        border-width: 0px;
+        transition: 0.2s ease all;
+        cursor: pointer;
+
+        &:hover {
+            background: $accent;
+        }
+    }
+}
+
+.btn {
+    background: $green;
+    padding: 1rem;
+    border-radius: 0.6rem;
+    transition: 0.2s ease-out;
+    user-select: none;
+    text-align: center;
+    color: $white;
+    text-decoration: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:not([disabled]) {
+        cursor: pointer;
+    }
+
+    &:not([disabled]):hover {
+        filter: brightness(85%);
+    }
+
+    &:not([disabled]):active {
+        filter: brightness(75%);
+    }
+
+    &.red {
+        background: $red;
+    }
 }

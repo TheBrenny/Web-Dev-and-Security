@@ -16,7 +16,9 @@ a {
     }
 }
 
-.container, .wrapper, .box {
+.container,
+.wrapper,
+.box {
     box-sizing: border-box;
 }
 
@@ -58,4 +60,8 @@ a {
         background: change-color($black, $alpha: 0.05);
         transform: scale(1.2);
     }
+}
+
+.flex {
+    display: flex;
 }

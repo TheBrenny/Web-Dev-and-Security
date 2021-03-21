@@ -1,3 +1,10 @@
+hr {
+  width: 100%;
+  height: 1px;
+  border: none;
+  background: #000;
+  background: linear-gradient(90deg, rgba(254, 158, 114, 0) 0%, rgba(254, 158, 114, 0.75) 20% 80%, rgba(254, 158, 114, 0) 100%); }
+
 body {
   background: #f7f5f3; }
 
@@ -33,37 +40,71 @@ body {
   font-size: 1.25em; }
   .displayBox > h1 {
     text-align: center; }
-  .displayBox label {
-    position: relative;
-    pointer-events: none;
-    top: -37.5px;
-    left: 4px;
+
+label {
+  position: relative;
+  pointer-events: none;
+  top: -37.5px;
+  left: 4px;
+  transition: 0.2s ease all;
+  height: 0;
+  opacity: 0.6; }
+
+input,
+select {
+  background: #e3dcd4;
+  width: 100%;
+  transition: 0.2s ease border;
+  height: 2.5em;
+  font-size: 1em;
+  padding: 0.3em;
+  outline: none;
+  border: none;
+  border-bottom: 0.2em solid rgba(254, 158, 114, 0);
+  border-radius: 0.2em;
+  box-shadow: none;
+  display: block; }
+  input:focus,
+  select:focus {
+    border-bottom: 0.2em solid #FE9E72;
+    outline: none; }
+  input:focus + label,
+  input:not(:focus):valid + label,
+  select:focus + label,
+  select:not(:focus):valid + label {
+    top: -48px;
+    left: 6px;
+    font-size: 0.5em; }
+  input[type="text"], input[type="password"],
+  select[type="text"],
+  select[type="password"] {
+    padding-top: 1em; }
+  input[type="submit"],
+  select[type="submit"] {
+    border-width: 0px;
     transition: 0.2s ease all;
-    height: 0;
-    opacity: 0.6; }
-  .displayBox input {
-    width: 100%;
-    height: 2.5em;
-    font-size: 1em;
-    background: #e3dcd4;
-    padding: 0.2em;
-    outline: none;
-    border: none;
-    border-bottom: 1px solid #001524;
-    box-shadow: none; }
-    .displayBox input:focus {
-      border-color: #FE9E72;
-      border-width: 2px; }
-    .displayBox input:focus + label,
-    .displayBox input:not(:focus):valid + label {
-      top: -47.5px;
-      left: 4px;
-      font-size: 0.5em; }
-    .displayBox input[type="text"], .displayBox input[type="password"] {
-      padding-top: 0.75em; }
-    .displayBox input[type="submit"] {
-      border-width: 0px;
-      transition: 0.2s ease all;
-      cursor: pointer; }
-      .displayBox input[type="submit"]:hover {
-        background: #FE9E72; }
+    cursor: pointer; }
+    input[type="submit"]:hover,
+    select[type="submit"]:hover {
+      background: #FE9E72; }
+
+.btn {
+  background: #319757;
+  padding: 1rem;
+  border-radius: 0.6rem;
+  transition: 0.2s ease-out;
+  user-select: none;
+  text-align: center;
+  color: #f7f5f3;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .btn:not([disabled]) {
+    cursor: pointer; }
+  .btn:not([disabled]):hover {
+    filter: brightness(85%); }
+  .btn:not([disabled]):active {
+    filter: brightness(75%); }
+  .btn.red {
+    background: #E85F5C; }
