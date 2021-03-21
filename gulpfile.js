@@ -7,8 +7,13 @@ const nodemon = require('gulp-nodemon');
 const config = require('./config');
 const host = config.serverInfo.host;
 
-gulp.task("sass", function () {
-    return gulp.src(["**/assets/scss/**/*.scss"])
+// [a] because that way the directory structure is maintained!
+const sassGlobs = [
+    "./[a]ssets/scss/**/*.scss",
+    "./[a]pps/*/assets/scss/**/*.scss"
+];
+function globSass(globPath) {
+    return gulp.src(globPath)
         .pipe(sass().on("error", sass.logError))
         .pipe(rename(function (f) {
             f.dirname = path.join(path.dirname(f.dirname), "css");
@@ -17,6 +22,18 @@ gulp.task("sass", function () {
         .pipe(browserSync.reload({
             stream: true
         }));
+}
+
+gulp.task("sass", function (cb) {
+    let streams = sassGlobs.map(glob => new Promise((resolve, reject) => {
+        globSass(glob)
+            .on("finish", resolve)
+            .on("error", reject);
+    }));
+    Promise.all(streams)
+        .then(() => console.log(streams))
+        .then(() => cb())
+        .catch(err => console.log(err) && cb(err));
 });
 
 gulp.task("browserSync", function (cb) {
@@ -54,7 +71,7 @@ gulp.task("nodemon", function (cb) {
     });
 });
 gulp.task("watch", gulp.series("sass", function (cb) {
-    gulp.watch("./**/assets/scss/**/*.scss", gulp.series("sass"));
+    gulp.watch(sassGlobs, gulp.series("sass"));
     console.log("Watching SCSS!");
     cb();
 }));
