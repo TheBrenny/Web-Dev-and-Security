@@ -19,7 +19,10 @@ module.exports = (async function () {
         }
 
         // Object.assign(global.db, module.exports);
-        global.db = mysql.createConnection(dbUrl.href);
+        global.db = mysql.createConnection({
+            uri: dbUrl.href,
+            multipleStatements: true
+        });
     }
     return global.db;
 })();

@@ -1,2 +1,3 @@
 DROP DATABASE wds;
 CREATE DATABASE wds;
+USE wds;

@@ -14,14 +14,14 @@ INSERT INTO `products` (`name`, `description`, `owner`, `cost`, `quantity`, `pos
     ('Dice', 'Introduce some more chance in your life! 🎲', 4, 15.00, 10, DATE('2021-01-01'));
 
 UPDATE `products` SET
-    `purchased_date` = DATE(),
+    `purchased_date` = DATE('2020-10-12'),
     `purchased_by` = 4
 WHERE `id` = 3;
 UPDATE `products` SET
-    `purchased_date` = DATE(),
+    `purchased_date` = DATE('2020-03-21'),
     `purchased_by` = 4
 WHERE `id` = 2;
 UPDATE `products` SET
-    `purchased_date` = DATE(),
+    `purchased_date` = DATE('2020-06-15'),
     `purchased_by` = 2
 WHERE `id` = 1;

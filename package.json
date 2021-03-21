@@ -6,6 +6,7 @@
   "scripts": {
     "": "",
     "start": "node server.js",
+    "heroku-postbuild": "node install.js cleanDB installDB demoDB",
     "test": "echo \"Error: no test specified\""
   },
   "author": "TheBrenny <iam+dev@justbrenny.me>",
