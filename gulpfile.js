@@ -12,6 +12,7 @@ const sassGlobs = [
     "./[aa]ssets/scss/**/*.scss",
     "./[aa]pps/**/assets/scss/**/*.scss"
 ];
+
 function globSass(globPath) {
     return gulp.src(globPath)
         .pipe(sass().on("error", sass.logError))
@@ -70,9 +71,14 @@ gulp.task("nodemon", function (cb) {
     });
 });
 gulp.task("watch", gulp.series("sass", function (cb) {
-    sassGlobs.forEach((glob) => {
-        gulp.watch(glob, gulp.series("sass"));
-    });
+    // sassGlobs.forEach((glob) => {
+    //     gulp.watch(glob, {
+    //         delay: 300
+    //     }, gulp.series("sass"));
+    // });
+    gulp.watch(sassGlobs, {
+        delay: 500
+    }, gulp.series("sass"));
     console.log("Watching SCSS!");
     cb();
 }));
