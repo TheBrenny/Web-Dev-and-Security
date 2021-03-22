@@ -6,8 +6,9 @@ const config = require("./config");
 let dbScripts = path.join(__dirname, "db", "scripts");
 let readScript = (s, vars) => {
     let sql = fs.readFileSync(path.join(dbScripts, s)).toString();
+    vars = vars || {};
     for (let key of Object.keys(vars)) {
-        sql = sql.replace(new RegExp("\$\{" + key + "\}", "g"), vars[key]);
+        sql = sql.replace(new RegExp("\\$\\{" + key + "\\}", "g"), vars[key]);
     }
     return sql;
 };
@@ -20,24 +21,21 @@ if (process.argv.includes("cleanDB")) {
             });
             console.log(sql);
             return sql;
-        }).then((sql) => Database.query(sql))
-        .then((ret) => console.log(ret.toString()));
+        }).then((sql) => Database.query(sql));
 }
 if (process.argv.includes("installDB")) {
     prom = prom.then(() => {
             let sql = readScript("install.sql");
             console.log(sql);
             return sql;
-        }).then((sql) => Database.query(sql))
-        .then((ret) => console.log(ret.toString()));
+        }).then((sql) => Database.query(sql));
 }
 if (process.argv.includes("demoDB")) {
     prom = prom.then(() => {
             let sql = readScript("demo.sql");
             console.log(sql);
             return sql;
-        }).then((sql) => Database.query(sql))
-        .then((ret) => console.log(ret.toString()));
+        }).then((sql) => Database.query(sql));
 }
 prom.then(() => {
     console.log("\nAll Done!");
