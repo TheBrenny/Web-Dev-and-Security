@@ -1,15 +1,16 @@
 @import './variables';
 
-$navHeight: 3.5em;
+$navHeight: 4em;
 $navLineSpeed: 0.125s;
 $navLineHeightMin: 0.1em;
 $navLineHeightMax: 0.3em;
 
 .navbar {
     width: 100%;
-    background:
-        radial-gradient(75% 50% at bottom, rgba(0, 0, 0, 0.2) 0%, transparent 30%),
-        linear-gradient(180deg, $main 50%, darken($main, 15%) 125%);
+    // background:
+    //     radial-gradient(75% 50% at bottom, rgba(0, 0, 0, 0.2) 0%, transparent 30%),
+    //     linear-gradient(180deg, $main 50%, darken($main, 15%) 125%);
+    background: darken($white, 10);
     position: fixed;
     top: 0;
     display: flex;
@@ -17,6 +18,10 @@ $navLineHeightMax: 0.3em;
     align-items: center;
     justify-content: space-between;
     height: $navHeight;
+
+    +* {
+        margin-top: $navHeight;
+    }
 
     .logo {
         width: 100px;
@@ -33,7 +38,7 @@ $navLineHeightMax: 0.3em;
         overflow: hidden;
 
         .navItem {
-            background: rgba(0,0,0,0.2);
+            // background: rgba(0,0,0,0.2);
             border: 0em solid $black;
             padding-bottom: $navLineHeightMax;
             border-bottom-width: $navLineHeightMin;

@@ -1,5 +1,5 @@
 <div class="navbar">
-    <p class="logo">z5217759</p>
+    <img src="/project1/assets/img/logo_small.png" alt="z5217759 // QM" class="logo">
     <nav>
         [[e= navItem in navList ]]
             <a href="/project1[[navItem.slug]]" class="navItem

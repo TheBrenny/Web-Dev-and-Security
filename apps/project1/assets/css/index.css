@@ -6,10 +6,6 @@
     max-width: 500px;
     width: 80%; }
 
-.container {
-  padding: 2em;
-  height: revert; }
-
 .app {
   display: flex;
   flex-flow: row;

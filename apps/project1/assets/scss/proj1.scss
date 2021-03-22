@@ -99,19 +99,11 @@ select {
     &[type="password"] {
         padding-top: 1em;
     }
-
-    &[type="submit"] {
-        border-width: 0px;
-        transition: 0.2s ease all;
-        cursor: pointer;
-
-        &:hover {
-            background: $accent;
-        }
-    }
 }
 
-.btn {
+.btn,
+input[type="submit"] {
+    border: none;
     background: $green;
     padding: 1rem;
     border-radius: 0.6rem;
@@ -120,7 +112,6 @@ select {
     text-align: center;
     color: $white;
     text-decoration: none;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -130,7 +121,8 @@ select {
     }
 
     &:not([disabled]):hover {
-        filter: brightness(85%);
+        color: $accent;
+        filter: brightness(105%);
     }
 
     &:not([disabled]):active {

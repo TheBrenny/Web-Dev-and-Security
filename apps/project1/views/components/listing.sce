@@ -1,5 +1,5 @@
 <a href="" class="listing">
-    <img src="/project1/assets/images/[[item.image]]" alt="Listing Image" class="listingImage">
+    <img src="/project1/assets/img/products/[[item.image]]" alt="Listing Image" class="listingImage">
     <div class="listingCaption">
         <p>
             [[item.name]]

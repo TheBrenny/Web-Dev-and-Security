@@ -1,13 +1,15 @@
 .navbar {
   width: 100%;
-  background: radial-gradient(75% 50% at bottom, rgba(0, 0, 0, 0.2) 0%, transparent 30%), linear-gradient(180deg, #559CAD 50%, #3b6e7a 125%);
+  background: #e3dcd4;
   position: fixed;
   top: 0;
   display: flex;
   flex-flow: row;
   align-items: center;
   justify-content: space-between;
-  height: 3.5em; }
+  height: 4em; }
+  .navbar + * {
+    margin-top: 4em; }
   .navbar .logo {
     width: 100px;
     text-align: center;
@@ -20,7 +22,6 @@
     height: 100%;
     overflow: hidden; }
     .navbar nav .navItem {
-      background: rgba(0, 0, 0, 0.2);
       border: 0em solid #001524;
       padding-bottom: 0.3em;
       border-bottom-width: 0.1em;

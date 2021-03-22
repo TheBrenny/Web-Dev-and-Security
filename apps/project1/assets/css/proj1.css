@@ -79,16 +79,10 @@ select {
   select[type="text"],
   select[type="password"] {
     padding-top: 1em; }
-  input[type="submit"],
-  select[type="submit"] {
-    border-width: 0px;
-    transition: 0.2s ease all;
-    cursor: pointer; }
-    input[type="submit"]:hover,
-    select[type="submit"]:hover {
-      background: #FE9E72; }
 
-.btn {
+.btn,
+input[type="submit"] {
+  border: none;
   background: #319757;
   padding: 1rem;
   border-radius: 0.6rem;
@@ -100,11 +94,16 @@ select {
   display: flex;
   justify-content: center;
   align-items: center; }
-  .btn:not([disabled]) {
+  .btn:not([disabled]),
+  input[type="submit"]:not([disabled]) {
     cursor: pointer; }
-  .btn:not([disabled]):hover {
-    filter: brightness(85%); }
-  .btn:not([disabled]):active {
+  .btn:not([disabled]):hover,
+  input[type="submit"]:not([disabled]):hover {
+    color: #FE9E72;
+    filter: brightness(105%); }
+  .btn:not([disabled]):active,
+  input[type="submit"]:not([disabled]):active {
     filter: brightness(75%); }
-  .btn.red {
+  .btn.red,
+  input[type="submit"].red {
     background: #E85F5C; }
