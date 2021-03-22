@@ -1,0 +1,17 @@
+.search {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    max-width: 900px;
+    justify-content:center;
+    align-items: stretch;
+
+    input {
+        flex-grow: 1;
+        border-radius: 0.5em;
+
+        +.btn {
+            flex-basis: 25%;
+        }
+    }
+}

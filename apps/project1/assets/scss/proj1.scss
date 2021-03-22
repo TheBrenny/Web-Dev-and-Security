@@ -58,14 +58,37 @@ body {
     }
 }
 
-label {
-    position: relative;
-    pointer-events: none;
-    top: -37.5px;
-    left: 4px;
-    transition: 0.2s ease all;
-    height: 0;
-    opacity: 0.6;
+.loginBox {
+
+    label {
+        position: relative;
+        pointer-events: none;
+        top: -37.5px;
+        left: 4px;
+        transition: 0.2s ease all;
+        height: 0;
+        opacity: 0.6;
+    }
+
+    input {
+
+        &,
+        select {
+            height: 2.5em;
+        }
+
+        &:focus+label,
+        &:not(:focus):valid+label {
+            top: -48px;
+            left: 6px;
+            font-size: 0.5em;
+        }
+
+        &[type="text"],
+        &[type="password"] {
+            padding-top: 1em;
+        }
+    }
 }
 
 input,
@@ -73,7 +96,6 @@ select {
     background: darken($white, 10);
     width: 100%;
     transition: 0.2s ease border;
-    height: 2.5em;
     font-size: 1em;
     padding: 0.3em;
     outline: none;
@@ -86,18 +108,6 @@ select {
     &:focus {
         border-bottom: 0.2em solid $accent;
         outline: none;
-    }
-
-    &:focus+label,
-    &:not(:focus):valid+label {
-        top: -48px;
-        left: 6px;
-        font-size: 0.5em;
-    }
-
-    &[type="text"],
-    &[type="password"] {
-        padding-top: 1em;
     }
 }
 

@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="/assets/css/main.css">
     <link rel="stylesheet" href="/project1/assets/css/proj1.css">
     <link rel="stylesheet" href="/project1/assets/css/navbar.css">
-    <link rel="stylesheet" href="/project1/assets/css/listings.css">
     <title>z5217759 - Project 1</title>
 </head>
 <body>

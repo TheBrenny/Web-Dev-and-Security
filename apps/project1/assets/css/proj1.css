@@ -41,7 +41,7 @@ body {
   .displayBox > h1 {
     text-align: center; }
 
-label {
+.loginBox label {
   position: relative;
   pointer-events: none;
   top: -37.5px;
@@ -50,12 +50,24 @@ label {
   height: 0;
   opacity: 0.6; }
 
+.loginBox input,
+.loginBox input select {
+  height: 2.5em; }
+
+.loginBox input:focus + label,
+.loginBox input:not(:focus):valid + label {
+  top: -48px;
+  left: 6px;
+  font-size: 0.5em; }
+
+.loginBox input[type="text"], .loginBox input[type="password"] {
+  padding-top: 1em; }
+
 input,
 select {
   background: #e3dcd4;
   width: 100%;
   transition: 0.2s ease border;
-  height: 2.5em;
   font-size: 1em;
   padding: 0.3em;
   outline: none;
@@ -68,17 +80,6 @@ select {
   select:focus {
     border-bottom: 0.2em solid #FE9E72;
     outline: none; }
-  input:focus + label,
-  input:not(:focus):valid + label,
-  select:focus + label,
-  select:not(:focus):valid + label {
-    top: -48px;
-    left: 6px;
-    font-size: 0.5em; }
-  input[type="text"], input[type="password"],
-  select[type="text"],
-  select[type="password"] {
-    padding-top: 1em; }
 
 .btn,
 input[type="submit"] {
