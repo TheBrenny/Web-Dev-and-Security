@@ -1,3 +1,3 @@
-DROP DATABASE wds;
-CREATE DATABASE wds;
-USE wds;
+DROP DATABASE ${db};
+CREATE DATABASE ${db};
+USE ${db};

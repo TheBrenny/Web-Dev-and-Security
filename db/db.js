@@ -13,7 +13,7 @@ const templateFolder = path.join(dbFolder, "templates");
 
 module.exports = (async function () {
     if (!global.hasOwnProperty('db')) {
-        let dbUrl = new URL(config.db.url);
+        let dbUrl = config.db.url;
         if (config.db.isDev) {
             dbUrl.searchParams.append("debug", "true");
         }

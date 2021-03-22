@@ -5,7 +5,7 @@ const isDevSwitch = false;
 module.exports = {};
 
 module.exports.db = {
-    url: process.env.MYSQL_URL || process.env.JAWSDB_URL
+    url: new URL(process.env.MYSQL_URL)
 };
 
 module.exports.env = {
