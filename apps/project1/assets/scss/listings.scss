@@ -1,17 +1,55 @@
+@import './variables';
+
 .search {
     display: flex;
     flex-direction: row;
     width: 80%;
     max-width: 900px;
-    justify-content:center;
+    justify-content: center;
     align-items: stretch;
+    gap: 1em;
 
     input {
         flex-grow: 1;
         border-radius: 0.5em;
+        padding-left: 0.7em;
 
         +.btn {
             flex-basis: 25%;
+        }
+    }
+}
+
+#listingTable {
+    .row.head {
+        min-height: 4em;
+        padding: 1rem 0rem;
+        font-size: 1.5rem;
+        font-weight: bold;
+        background: $darkWhite;
+    }
+
+    .row>.cell {
+        padding: 0.4rem;
+    }
+
+    .row>.cell:first-child {
+        width: 6rem;
+
+        >img {
+            max-height: 6em;
+        }
+    }
+
+    .row:not(.head) {
+        border: 1px solid black;
+
+        &:not(:last-child) {
+            border-bottom: 0px;
+        }
+
+        &:nth-child(2n+1) {
+            background: lighten($darkWhite, 5);
         }
     }
 }

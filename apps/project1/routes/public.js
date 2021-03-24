@@ -5,10 +5,25 @@ const crypto = require("bcrypt");
 const Database = require("../../../db/database");
 
 function getPageOptions(req, listings) {
+    let outListings = [];
+    for (let l of listings) {
+        outListings.push({
+            image: l.products_image,
+            name: l.products_name,
+            description: l.products_description,
+            cost: l.products_cost,
+            id: l.products_id,
+            seller: {
+                name: l.users_username
+            }
+        });
+    }
+
     return {
         navList: getNavList(req),
-        listings: listings,
-        user: getUser(req)
+        listings: outListings,
+        listingCount: outListings.length,
+        user: session(req).getAccount()
     };
 }
 
@@ -37,32 +52,62 @@ function getNavList(req) {
     ];
 
     for (let i in navList) {
-        navList[i].active = req.path === navList[i].slug;
+        if (navList[i].slug == "/") continue;
+        navList[i].active = req.path.startsWith(navList[i].slug);
     }
 
     return navList;
 }
 
-function getUser(req) {
-    return session(req).getAccount();
-}
-
 router.get("/", async (req, res) => {
-    res.render("index", getPageOptions(req, await Database.getRandomAvailableProducts()));
+    res.render("index", {
+        ...getPageOptions(req, await Database.getRandomAvailableProducts())
+    });
 });
 
 router.get("/listings", async (req, res) => {
-    res.render("listings", getPageOptions(req, await Database.getAvailableProducts()));
+    res.render("listings", {
+        ...getPageOptions(req, await Database.getAvailableProducts()),
+        search: ""
+    });
+});
+
+router.get("/listings/search/", async (_req, res) => {
+    res.redirect("/project1/listings");
 });
 
 router.get("/listings/search/:query", async (req, res) => {
-    //do a like search and return results
-    res.render("listings", getPageOptions(req, await Database.getAvailableProducts(req.params.query)));
+    res.render("listings", {
+        ...getPageOptions(req, await Database.getAvailableProducts(req.params.query)),
+        search: req.params.query
+    });
 });
 
 router.get("/listings/search/:query/all?", async (req, res) => {
     //do a like search and return results
-    res.render("listings", getPageOptions(req, await Database.getAllProducts(req.params.query)));
+    res.render("listings", {
+        ...getPageOptions(req, await Database.getAllProducts(req.params.query)),
+        search: req.params.query
+    });
+});
+
+router.get("/cart", async (req, res) => {
+    res.render("cart", {
+        ...getPageOptions(req, await Database.getListedProducts(session(req).getCart()))
+    });
+});
+
+router.post("/cart/add", async (req, res) => {
+    session(req).addToCart(req.body.target);
+    res.json({
+        success: true
+    });
+});
+router.post("/cart/remove", async (req, res) => {
+    session(req).removeFromCart(req.body.target);
+    res.json({
+        success: true
+    });
 });
 
 router.get("/register", checks.isGuest, async (req, res) => {
@@ -99,9 +144,9 @@ router.post("/login", checks.isGuest, async (req, res) => {
 
     // found user
     if (target.length > 0) {
-        const passMatch = password == target[0].plainPassword; //bcrypt.compareSync(password, target[0].password);
+        const passMatch = password == target[0].users_plainPassword; //bcrypt.compareSync(password, target[0].password);
         if (passMatch) {
-            session(req).setAccount(target[0].id, target[0].username);
+            session(req).setAccount(target[0].users_id, target[0].users_username);
             // req.session.account = {
             //     name: target[0].username,
             //     id: target[0].id

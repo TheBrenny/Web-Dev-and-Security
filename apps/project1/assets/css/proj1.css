@@ -105,6 +105,10 @@ input[type="submit"] {
   .btn:not([disabled]):active,
   input[type="submit"]:not([disabled]):active {
     filter: brightness(75%); }
+  .btn.white,
+  input[type="submit"].white {
+    background: #e3dcd4;
+    color: #001524; }
   .btn.red,
   input[type="submit"].red {
     background: #E85F5C; }

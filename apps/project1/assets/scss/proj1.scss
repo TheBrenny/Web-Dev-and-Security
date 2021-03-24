@@ -93,7 +93,7 @@ body {
 
 input,
 select {
-    background: darken($white, 10);
+    background: $darkWhite;
     width: 100%;
     transition: 0.2s ease border;
     font-size: 1em;
@@ -137,6 +137,11 @@ input[type="submit"] {
 
     &:not([disabled]):active {
         filter: brightness(75%);
+    }
+
+    &.white {
+        background: $darkWhite;
+        color: $black;
     }
 
     &.red {

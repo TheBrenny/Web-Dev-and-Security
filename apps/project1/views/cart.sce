@@ -2,13 +2,14 @@
 [[i= partials/navbar ]]
 
 <div class="container center">
-    <div class="search">
-        <input placeholder="Search" type="text" name="search" value="[[search]]">
-        <div class="btn">Search</div>
-    </div>
+    [[?= user.authed ]]
+        <h1 style="text-align:center;">[[user.name]]'s Cart</h1>
+    [[3=]]
+        <h1 style="text-align:center;">Your Cart</h1>
+    [[?==]]
     <hr style="margin:2em;height:2px;">
     [[?= listings.length == 0 ]]
-        <p>It seems that you're looking for something that's already been bought, or is not yet up for sale. Check back later, or try a different search term.</p>
+        <p>It seems you haven't added anything to your cart yet. Check out some items <a href="/project1/listings">here</a>!</p>
     [[3=]]
     <div id="listingTable" class="table">
         <div class="row head">
@@ -17,7 +18,7 @@
             <div class="cell center">Description</div>
             <div class="cell center">Cost</div>
             <div class="cell center">Seller</div>
-            <div class="cell center" style="width:2em;">Add</div>
+            <div class="cell center" style="width:4em;">Delete</div>
         </div>
         [[e= item in listings ]]
             <div class="row">
@@ -26,8 +27,8 @@
                 <div class="cell center">[[item.description]]</div>
                 <div class="cell center">$[[item.cost]]</div>
                 <div class="cell center">[[item.seller.name]]</div>
-                <div class="cell center" style="width:2em;">
-                    <div class="btn white" style="padding:0.55rem;" action="addToCart" target="[[item.id]]">Add</div>
+                <div class="cell center" style="width:4em;">
+                    <div class="btn" style="padding:0.55rem;" action="removeFromCart" target="[[item.id]]">Remove</div>
                 </div>
             </div>
         [[?==]]

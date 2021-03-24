@@ -4,7 +4,8 @@ const sessionSchema = {
         id: -1,
         authed: false,
         badLogin: false
-    }
+    },
+    cart: [] // TODO: I'm just saving item IDs. I should be saving the whole Product object.
 };
 
 function add(key, value) {
@@ -61,6 +62,22 @@ function badRegister() {
     this.badReg = true;
 }
 
+function getCart() {
+    if (this.cart == undefined) this.cart = [...sessionSchema.cart];
+    return this.cart;
+}
+
+function addToCart(id) {
+    if (this.cart == undefined) this.cart = [...sessionSchema.cart];
+    this.cart.push(id);
+}
+
+function removeFromCart(id) {
+    if (this.cart == undefined) this.cart = [...sessionSchema.cart];
+    let loc = this.cart.indexOf(id);
+    if (loc >= 0) this.cart.splice(loc, 1);
+}
+
 
 const functions = {
     add,
@@ -73,6 +90,9 @@ const functions = {
     badLogin,
     isBadRegister,
     badRegister,
+    getCart,
+    addToCart,
+    removeFromCart,
 };
 
 module.exports = function (req) {

@@ -24,6 +24,7 @@
                 
                 <div class="flex homeBlockLogin">
                     [[?= user.authed ]]
+                        <a href="/project1/cart" class="btn">Cart</a>
                         <a href="/project1/logout" class="btn red">Logout</a>
                     [[3=]]
                         <a href="/project1/login" class="btn">Login</a>

@@ -4,9 +4,33 @@
   width: 80%;
   max-width: 900px;
   justify-content: center;
-  align-items: stretch; }
+  align-items: stretch;
+  gap: 1em; }
   .search input {
     flex-grow: 1;
-    border-radius: 0.5em; }
+    border-radius: 0.5em;
+    padding-left: 0.7em; }
     .search input + .btn {
       flex-basis: 25%; }
+
+#listingTable .row.head {
+  min-height: 4em;
+  padding: 1rem 0rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  background: #e3dcd4; }
+
+#listingTable .row > .cell {
+  padding: 0.4rem; }
+
+#listingTable .row > .cell:first-child {
+  width: 6rem; }
+  #listingTable .row > .cell:first-child > img {
+    max-height: 6em; }
+
+#listingTable .row:not(.head) {
+  border: 1px solid black; }
+  #listingTable .row:not(.head):not(:last-child) {
+    border-bottom: 0px; }
+  #listingTable .row:not(.head):nth-child(2n+1) {
+    background: #ede8e4; }

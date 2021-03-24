@@ -10,7 +10,7 @@ $navLineHeightMax: 0.3em;
     // background:
     //     radial-gradient(75% 50% at bottom, rgba(0, 0, 0, 0.2) 0%, transparent 30%),
     //     linear-gradient(180deg, $main 50%, darken($main, 15%) 125%);
-    background: darken($white, 10);
+    background: $darkWhite;
     position: fixed;
     top: 0;
     display: flex;

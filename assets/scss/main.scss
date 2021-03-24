@@ -23,10 +23,10 @@ a {
 }
 
 .container {
-    width: 100%;
+    width: 80%;
+    margin: auto;
     padding: 2em;
     height: revert;
-    margin: 0;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -34,6 +34,10 @@ a {
     &.center {
         justify-content: center;
         align-items: center;
+    }
+
+    >* {
+        width: 100%;
     }
 }
 
@@ -64,4 +68,31 @@ a {
 
 .flex {
     display: flex;
+}
+
+.row {
+    display: flex;
+    flex-flow: row;
+
+    &.head {
+        border-radius: 1rem 1rem 0rem 0rem;
+    }
+
+    .cell {
+        display: flex;
+
+        &.center {
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    @for $i from 1 through $maxCols {
+
+        .cell:first-child:nth-last-child(#{$i}),
+        .cell:first-child:nth-last-child(#{$i})~.cell {
+            width: (100% / $i);
+            flex-grow: 1;
+        }
+    }
 }
