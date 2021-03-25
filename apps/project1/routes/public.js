@@ -29,6 +29,14 @@ function getPageOptions(req, listings) {
 
 function getNavList(req) {
     let isAuthed = session(req).isAuthed();
+    let statics = [
+        "/about",
+        "/contact",
+        "/contactinfo",
+        "/future",
+        "/mission",
+        "/sponsors",
+    ];
     let navList = [{
             slug: "/",
             title: "Home",
@@ -49,11 +57,17 @@ function getNavList(req) {
             title: isAuthed ? session(req).name() : "Login",
             active: false
         },
+        {
+            slug: "/about",
+            title: "About",
+            active: false
+        },
     ];
 
     for (let i in navList) {
         if (navList[i].slug == "/") continue;
         navList[i].active = req.path.startsWith(navList[i].slug);
+        if (navList[i].slug == "/about" && statics.includes(req.path));
     }
 
     return navList;
@@ -92,7 +106,7 @@ router.get("/listings/search/:query/all?", async (req, res) => {
 });
 
 router.get("/cart", async (req, res) => {
-    res.render("cart", {
+    res.render("cart/cart", {
         ...getPageOptions(req, await Database.getListedProducts(session(req).getCart()))
     });
 });
@@ -108,6 +122,29 @@ router.post("/cart/remove", async (req, res) => {
     res.json({
         success: true
     });
+});
+
+router.get("/cart/shipping", async (req, res) => {
+    res.render("cart/shipping", {
+        ...getPageOptions(req, [])
+    });
+});
+router.post("/cart/shipping", async (req, res) => {
+
+});
+router.get("/cart/payment", async (req, res) => {
+    res.render("cart/payment", {
+        ...getPageOptions(req, [])
+    });
+});
+router.post("/cart/payment", async (req, res) => {
+
+});
+router.get("/cart/checkout", async (req, res) => {
+
+});
+router.post("/cart/checkout", async (req, res) => {
+
 });
 
 router.get("/register", checks.isGuest, async (req, res) => {
@@ -129,6 +166,7 @@ router.get("/logout", checks.isAuthed, async (req, res) => {
     session(req).setAccount();
     res.redirect("/project1");
 });
+
 
 // let hash = crypto.hashSync(password, 12); // 12 rounds of bcrypt salting
 // upper line is used for registering!
@@ -189,6 +227,34 @@ router.post("/register", checks.isGuest, async (req, res) => {
         session(req).badRegister();
         res.status(401).redirect("/project1/register");
     }
+});
+
+
+// ================================= STATIC PAGES =================================
+router.get("/about", async (req, res) => {
+    res.render("static/about", {
+        ...getPageOptions(req, [])
+    });
+});
+router.get("/contactinfo", async (req, res) => {
+    res.render("static/contactinfo", {
+        ...getPageOptions(req, [])
+    });
+});
+router.get("/mission", async (req, res) => {
+    res.render("static/mission", {
+        ...getPageOptions(req, [])
+    });
+});
+router.get("/future", async (req, res) => {
+    res.render("static/future", {
+        ...getPageOptions(req, [])
+    });
+});
+router.get("/sponsors", async (req, res) => {
+    res.render("static/sponsors", {
+        ...getPageOptions(req, [])
+    });
 });
 
 module.exports = router;
