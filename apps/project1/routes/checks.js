@@ -15,9 +15,15 @@ function isGuest(req, res, next) {
     } else next();
 }
 
+function hasCart(req, res, next) {
+    if (session(req).getCart().length == 0) res.redirect("/project1/cart");
+    else next();
+}
+
 // ====================== Exports ======================
 module.exports = {
     isAuthed,
     isGuest,
+    hasCart,
     api: api
 };

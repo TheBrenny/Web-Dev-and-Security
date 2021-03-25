@@ -33,6 +33,7 @@
             </div>
         [[?==]]
     </div>
+    <div class="btn flexEnd" action="shipping">Shipping ▶</div>
     [[?==]]
 </div>
 

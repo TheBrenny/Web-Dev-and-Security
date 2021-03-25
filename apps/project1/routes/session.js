@@ -78,6 +78,29 @@ function removeFromCart(id) {
     if (loc >= 0) this.cart.splice(loc, 1);
 }
 
+function clearCart() {
+    this.cart = [];
+}
+
+function setAddress(street, town, suburb) {
+    this.address = {
+        street,
+        town,
+        suburb
+    };
+}
+
+function getAddress() {
+    return this.address;
+}
+
+function getVoucher() {
+    return this.voucher;
+}
+
+function setVoucher(code) {
+    this.voucher = code;
+}
 
 const functions = {
     add,
@@ -93,6 +116,11 @@ const functions = {
     getCart,
     addToCart,
     removeFromCart,
+    clearCart,
+    setAddress,
+    getAddress,
+    setVoucher,
+    getVoucher,
 };
 
 module.exports = function (req) {

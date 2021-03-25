@@ -70,29 +70,34 @@ a {
     display: flex;
 }
 
-.row {
-    display: flex;
-    flex-flow: row;
+.table {
+    margin-top: 1em;
+    margin-bottom: 1em;
 
-    &.head {
-        border-radius: 1rem 1rem 0rem 0rem;
-    }
-
-    .cell {
+    .row {
         display: flex;
+        flex-flow: row;
 
-        &.center {
-            justify-content: center;
-            align-items: center;
+        &.head {
+            border-radius: 1rem 1rem 0rem 0rem;
         }
-    }
 
-    @for $i from 1 through $maxCols {
+        .cell {
+            display: flex;
 
-        .cell:first-child:nth-last-child(#{$i}),
-        .cell:first-child:nth-last-child(#{$i})~.cell {
-            width: (100% / $i);
-            flex-grow: 1;
+            &.center {
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
+        @for $i from 1 through $maxCols {
+
+            .cell:first-child:nth-last-child(#{$i}),
+            .cell:first-child:nth-last-child(#{$i})~.cell {
+                width: (100% / $i);
+                flex-grow: 1;
+            }
         }
     }
 }

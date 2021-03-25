@@ -124,27 +124,36 @@ router.post("/cart/remove", async (req, res) => {
     });
 });
 
-router.get("/cart/shipping", async (req, res) => {
+router.get("/cart/shipping", checks.hasCart, async (req, res) => {
     res.render("cart/shipping", {
         ...getPageOptions(req, [])
     });
 });
-router.post("/cart/shipping", async (req, res) => {
-
+router.post("/cart/shipping", checks.hasCart, async (req, res) => {
+    session(req).setAddress(req.body.street, req.body.town, req.body.suburb);
+    res.redirect("/project1/cart/payment");
 });
 router.get("/cart/payment", async (req, res) => {
     res.render("cart/payment", {
         ...getPageOptions(req, [])
     });
 });
-router.post("/cart/payment", async (req, res) => {
-
+router.post("/cart/payment", checks.hasCart, async (req, res) => {
+    session(req).setVoucher(req.body.voucher);
+    res.redirect("/project1/cart/checkout");
 });
-router.get("/cart/checkout", async (req, res) => {
-
+router.get("/cart/checkout", checks.hasCart, async (req, res) => {
+    res.render("cart/checkout", {
+        ...getPageOptions(req, await Database.getListedProducts(session(req).getCart())),
+        address: session(req).getAddress(),
+        voucher: session(req).getVoucher()
+    });
 });
-router.post("/cart/checkout", async (req, res) => {
-
+router.post("/cart/checkout", checks.hasCart, async (req, res) => {
+    session(req).clearCart();
+    res.json({
+        success: true
+    });
 });
 
 router.get("/register", checks.isGuest, async (req, res) => {
