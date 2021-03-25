@@ -105,6 +105,12 @@ router.get("/listings/search/:query/all?", async (req, res) => {
     });
 });
 
+router.get("/sell", async (req, res) => {
+    res.render("comingsoon", {
+        ...getPageOptions(req, [])
+    });
+});
+
 router.get("/cart", async (req, res) => {
     res.render("cart/cart", {
         ...getPageOptions(req, await Database.getListedProducts(session(req).getCart()))
