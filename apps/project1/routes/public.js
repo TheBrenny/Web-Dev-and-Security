@@ -67,7 +67,7 @@ function getNavList(req) {
     for (let i in navList) {
         if (navList[i].slug == "/") continue;
         navList[i].active = req.path.startsWith(navList[i].slug);
-        if (navList[i].slug == "/about" && statics.includes(req.path));
+        if (navList[i].slug == "/about" && statics.includes(req.path)) navList[i].active = true;
     }
 
     return navList;
@@ -244,6 +244,14 @@ router.get("/about", async (req, res) => {
     res.render("static/about", {
         ...getPageOptions(req, [])
     });
+});
+router.all("/contact", async (req, res) => { // not static but fits in well
+    res.render("contact", {
+        ...getPageOptions(req, [])
+    });
+});
+router.post("/contact", async (req, res) => {
+    // TODO: MANAGE THESE
 });
 router.get("/contactinfo", async (req, res) => {
     res.render("static/contactinfo", {

@@ -1,6 +1,6 @@
 const sessionSchema = {
     account: {
-        name: null,
+        name: "",
         id: -1,
         authed: false,
         badLogin: false
