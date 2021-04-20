@@ -2,6 +2,9 @@
 pdf instructions/**/*
 !pdf instructions/.empty
 
+# Project Zips
+*Project*.rar
+
 # DB from Docker
 db/mysql
 

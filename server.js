@@ -11,39 +11,37 @@ const scetch = require("scetch")();
 const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
+const session = require("express-session");
 
 // Make the app
-const mainApp = express();
-mainApp.use(morgan('common', config.morgan));
-mainApp.use(helmet(config.helmet));
-mainApp.use(cors());
-mainApp.use(express.json());
+const app = express();
+const db = require("./db/db");
+app.use(morgan('common', config.morgan));
+app.use(helmet(config.helmet));
+app.use(cors());
+app.use(express.json());
+app.use(session({
+    secret: config.session.secret,
+    resave: false,
+    saveUninitialized: false,
+    store: db.sessionStore
+}));
+app.use(express.urlencoded({
+    extended: true
+}));
 
-mainApp.set('views', 'views');
-mainApp.engine('sce', scetch.engine);
-mainApp.set('view engine', 'sce');
+app.set('views', './app/views');
+app.engine('sce', scetch.engine);
+app.set('view engine', 'sce');
 
-mainApp.use("/assets", express.static(path.join(__dirname, "assets")));
+app.use("/assets", express.static("./app/assets"));
 
-// Generate app listing
-let allApps = require("./apps/meta.js");
-
-for (let a of allApps) {
-    mainApp.use("/" + a.slug, a.app);
-}
-
-mainApp.get("/", (_, res) => {
-    return res.render('index', {
-        apps: allApps
-    });
-});
-
-// Setup error handler
-mainApp.use(require("./errorRouter"));
-mainApp.use(require("./errorRouter").handler);
+app.use("/", require("./app/routes/public"));
+app.use(require("./errorRouter"));
+app.use(require("./errorRouter").handler);
 
 // LISTEN!
-mainApp.listen(serverInfo.port, serverInfo.host, () => {
+app.listen(serverInfo.port, serverInfo.host, () => {
     if (config.env.isDev && config.env.gulping) serverInfo.port = 81;
     console.log(`Server is listening at http://${serverInfo.host}:${serverInfo.port}...`);
 });
