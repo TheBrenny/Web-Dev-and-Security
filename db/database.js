@@ -53,8 +53,8 @@ class Database {
         return this.query(query);
     }
 
-    async getListedProducts(list) {
-        list = [...list]; // make a shallow copy so we stop breaking things
+    async getListedProducts(...list) {
+        list = list.reduce((a, c) => a.concat(c), []); // make a flattened copy so we stop breaking things
         for (let i in list) list[i] = "products.id=" + list[i];
         list = list.length > 0 ? list.join(" OR ") : "1=0";
         let query = `SELECT * FROM products INNER JOIN users ON products.owner=users.id WHERE ${list}`;

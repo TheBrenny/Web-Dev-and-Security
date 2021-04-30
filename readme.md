@@ -6,3 +6,33 @@ This was built using [NodeJS](https://nodejs.dev/) (a JS runtime framework), [Ex
 To run the server, execute `npm install && npm start`. You'll need NodeJS for this.
 
 There is also a live version available at Heroku: https://web-dev-and-security.herokuapp.com/
+
+## TODO:
+
+Based on the feedback from the first assignment, the following todo tree has been made (including general improvements for Project 2):
+
+ - [ ] Address feedback from Project 1
+   - [ ] ~~Show quantity of items to the user in the cart.~~ This is more like an eBay site.
+   - [ ] ~~Update button to change the quantity or remove items from cart (instead of delete).~~ Not quantity anymore
+   - [ ] Add a sell page for users
+   - [ ] Total cost of cart is missing
+   - [ ] Add a checkout button **(contest this in the Project 2 writeup)** Maybe show a smaller looking cart on each page?
+ - [ ] Confirm that all parts of the assignment follow the MVC model
+   - [ ] ... make a list of what needs to be done
+ - [ ] Add More Dynamic Pages
+   - [ ] Add 5 more dynamic pages (the Sell flow)?
+ - [ ] Call the DB from the Controller of the MVC
+   - [ ] Confirm that this actually happens
+   - [ ] Have a "rich variety" of tables with varying data types
+ - [ ] SQL Injection Prevention
+   - [ ] Use PreparedStatements to prevent SQL Injections
+   - [ ] Lookup Prepared Statements
+   - [ ] Look for more areas to prevent injection
+     - [ ] The search box!
+     - [ ] Login form
+     - [ ] Selling Box
+     - [ ] Accidental open JSON endpoints!
+ - [ ] Robust and functional website
+ - [ ] Good presentation and easy to navigate
+ - [ ] Submit zip file onto Moodle with Writeup, Project, and Database (`mysqldump`?)
+ - [ ] Push to Github and confirm the Heroku instance!

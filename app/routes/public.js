@@ -113,12 +113,14 @@ router.get("/sell", async (req, res) => {
 
 router.get("/cart", async (req, res) => {
     res.render("cart/cart", {
-        ...getPageOptions(req, await Database.getListedProducts(session(req).getCart()))
+        // ...getPageOptions(req, await Database.getListedProducts(Object.keys(session(req).getCart())))
+        ...getPageOptions(req, Object.values(session(req).getCart()))
     });
 });
 
 router.post("/cart/add", async (req, res) => {
-    session(req).addToCart(req.body.target);
+    let obj = await Database.getListedProducts(req.body.target);
+    session(req).addToCart(obj[0]);
     res.json({
         success: true
     });
@@ -258,6 +260,9 @@ router.all("/contact", async (req, res) => { // not static but fits in well
 });
 router.post("/contact", async (req, res) => {
     // TODO: MANAGE THESE
+    res.json({
+        "msg": "thanks!"
+    });
 });
 router.get("/contactinfo", async (req, res) => {
     res.render("static/contactinfo", {

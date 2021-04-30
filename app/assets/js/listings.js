@@ -7,6 +7,7 @@ document.onreadystatechange = function (ev) {
 
     const addButtons = $$(`.btn[action="addToCart"]`);
     addButtons.forEach((btn) => btn.addEventListener("click", (e) => modifyCart(e, "Add")));
+    
     const removeButtons = $$(`.btn[action="removeFromCart"]`);
     removeButtons.forEach((btn) => btn.addEventListener("click", (e) => modifyCart(e, "Remove")));
 

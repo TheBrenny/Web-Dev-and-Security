@@ -18,7 +18,7 @@
             <div class="cell center">Description</div>
             <div class="cell center">Cost</div>
             <div class="cell center">Seller</div>
-            <div class="cell center" style="width:4em;">Delete</div>
+            <div class="cell center" style="width:4em;">Remove</div>
         </div>
         [[e= item in listings ]]
             <div class="row">
@@ -33,7 +33,9 @@
             </div>
         [[?==]]
     </div>
-    <div class="btn flexEnd" action="shipping">Shipping ▶</div>
+    <div class="btn flexEnd btnBlue" action="update">Update ✨</div>
+    <div class="flexBr"></div>
+    <div class="btn flexEnd" action="shipping">Shipping 🚢</div>
     [[?==]]
 </div>
 

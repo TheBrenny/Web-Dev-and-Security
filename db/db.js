@@ -18,7 +18,7 @@ module.exports = (async function () {
             dbUrl.searchParams.append("debug", "true");
         }
 
-        // Object.assign(global.db, module.exports);
+        // Object.assign(module.exports, global.db); // this is the right way, I think...
         global.db = mysql.createConnection({
             uri: dbUrl.href,
             multipleStatements: true
