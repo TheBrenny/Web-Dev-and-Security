@@ -147,4 +147,8 @@ input[type="submit"] {
     &.red {
         background: $red;
     }
+
+    &.blue {
+        background: $main;
+    }
 }

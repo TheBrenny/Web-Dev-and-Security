@@ -313,3 +313,6 @@ template {
  */
 [hidden] {
   display: none; }
+
+span {
+  white-space: break-spaces; }

@@ -112,3 +112,6 @@ input[type="submit"] {
   .btn.red,
   input[type="submit"].red {
     background: #E85F5C; }
+  .btn.blue,
+  input[type="submit"].blue {
+    background: #559CAD; }
