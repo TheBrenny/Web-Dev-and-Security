@@ -32,7 +32,8 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "type": "node"
+      "type": "node",
+      "preLaunchTask": "startMysql"
     },
     {
       "name": "Demo",

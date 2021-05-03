@@ -1,0 +1,11 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label":"startMysql",
+            "command": "${workspaceFolder}/db/tools/mysql.bat",
+            "args": ["skip"],
+            "type": "process"
+        }
+    ]
+}
