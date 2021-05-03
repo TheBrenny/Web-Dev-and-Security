@@ -15,10 +15,10 @@ Based on the feedback from the first assignment, the following todo tree has bee
    - [ ] ~~Show quantity of items to the user in the cart.~~ This is more like an eBay site.
    - [ ] ~~Update button to change the quantity or remove items from cart (instead of delete).~~ Not quantity anymore
    - [ ] Add a sell page for users
-   - [ ] Total cost of cart is missing
+   - [x] Total cost of cart is missing
    - [ ] Add a checkout button **(contest this in the Project 2 writeup)** Maybe show a smaller looking cart on each page?
  - [ ] Confirm that all parts of the assignment follow the MVC model
-   - [ ] ... make a list of what needs to be done
+   - [ ] Make a MD file labelling all the files and stating it's role in the MVC paradigm.
  - [ ] Add More Dynamic Pages
    - [ ] Add 5 more dynamic pages (the Sell flow)?
  - [ ] Call the DB from the Controller of the MVC

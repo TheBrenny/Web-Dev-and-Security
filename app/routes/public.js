@@ -23,7 +23,9 @@ function getPageOptions(req, listings) {
         navList: getNavList(req),
         listings: outListings,
         listingCount: outListings.length,
-        user: session(req).getAccount()
+        user: session(req).getAccount(),
+        cartSize: session(req).getCartSize(),
+        cartCost: session(req).getCartCost()
     };
 }
 
@@ -119,16 +121,47 @@ router.get("/cart", async (req, res) => {
 });
 
 router.post("/cart/add", async (req, res) => {
-    let obj = await Database.getListedProducts(req.body.target);
+    let itemID = req.body.target;
+    if (session(req).cartContains(itemID)) {
+        res.json({
+            success: false,
+            message: "Item already exists in cart."
+        });
+        return;
+    }
+
+    let obj = await Database.getListedProducts(itemID);
+    if (obj.length === 0) {
+        res.json({
+            success: false,
+            message: "Could not find item specified."
+        });
+        return;
+    }
+
     session(req).addToCart(obj[0]);
     res.json({
-        success: true
+        success: true,
+        cartSize: session(req).getCartSize(),
+        cartCost: session(req).getCartCost()
     });
 });
 router.post("/cart/remove", async (req, res) => {
-    session(req).removeFromCart(req.body.target);
+    let itemID = req.body.target;
+
+    if (!session(req).cartContains(itemID)) {
+        res.json({
+            success: false,
+            message: "Item does not exist in cart."
+        });
+        return;
+    }
+
+    session(req).removeFromCart(itemID);
     res.json({
-        success: true
+        success: true,
+        cartSize: session(req).getCartSize(),
+        cartCost: session(req).getCartCost()
     });
 });
 

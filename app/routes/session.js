@@ -69,49 +69,31 @@ const cart = {
         let cart = this.getCart();
         let inCart = cart[obj.products_id] !== undefined;
 
-        if (inCart) cart[obj.products_id].quantity += 1;
-        else cart[obj.products_id] = Object.assign({}, obj, {
-            quantity: 1
-        });
+        if (!inCart) cart[obj.products_id] = Object.assign({}, obj);
 
         return this.getCartSize();
     },
-    removeFromCart(id, removeAll) {
-        let cart = this.getCart();
-
-        if (!!removeAll) {
-            delete cart[id];
-            return 0;
-        }
-
-        let inCart = cart[id] !== undefined;
-        if (!inCart) return 0;
-
-        cart[id].quantity -= 1;
-        if (cart[id].quantity <= 0) delete cart[id];
-
-        // if cart[id] is deleted, quantity wont exist, so 0 is returned
-        return (cart[id] || {}).quantity || 0;
+    removeFromCart(id) {
+        delete this.getCart()[id];
+        return this.getCartSize();
+    },
+    cartContains(id) {
+        return this.getCart()[id] !== undefined;
     },
     clearCart() {
         this.cart = [];
         return 0;
     },
     getCartSize() {
-        let cart = this.getCart();
-        let total = 0;
-        for (let id in cart) {
-            total += cart[id].quantity;
-        }
-        return total;
+        return Object.keys(this.getCart()).length;
     },
     getCartCost() {
         let cart = this.getCart();
         let total = 0;
         for (let id in cart) {
-            total += cart[id].quantity * cart[id].cost;
+            total += parseFloat(cart[id].products_cost);
         }
-        return total;
+        return total.toFixed(2);
     }
 };
 

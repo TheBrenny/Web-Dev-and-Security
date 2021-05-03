@@ -7,7 +7,7 @@ document.onreadystatechange = function (ev) {
 
     const addButtons = $$(`.btn[action="addToCart"]`);
     addButtons.forEach((btn) => btn.addEventListener("click", (e) => modifyCart(e, "Add")));
-    
+
     const removeButtons = $$(`.btn[action="removeFromCart"]`);
     removeButtons.forEach((btn) => btn.addEventListener("click", (e) => modifyCart(e, "Remove")));
 
@@ -38,8 +38,40 @@ function modifyCart(event, modName) {
         .then(json => {
             console.log(json);
             if (json.success) {
+                let cartSize = $(`[target="cartSize"]`);
+                let cartCost = $(`[target="cartCost"]`);
+                if (!!cartSize) cartSize.textContent = json.cartSize;
+                if (!!cartCost) cartCost.textContent = json.cartCost;
                 event.target.textContent = "✔";
+            } else {
+                throw new Error(json.message);
             }
+        })
+        .then(() => wait(1000))
+        .then(() => {
+            return new Promise((resolve) => {
+                if (modName !== "Remove") resolve();
+
+                let t = event.target;
+                t.opacity = 1;
+
+                const fadeOut = () => {
+                    t.opacity -= 0.05;
+                    if (t.opacity <= 0) {
+                        t.opacity = 0;
+
+                        resolve();
+                    } else {
+                        requestAnimationFrame(fadeOut);
+                    }
+                };
+                requestAnimationFrame(fadeOut);
+            });
+        })
+        .then(() => {
+            if (modName !== "Remove") return;
+            let row = event.target.parentNode.parentNode;
+            row.parentNode.removeChild(row);
         })
         .catch(() => event.target.textContent = "❌")
         .then(() => wait(3000))

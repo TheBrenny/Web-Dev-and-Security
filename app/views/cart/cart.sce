@@ -28,13 +28,17 @@
                 <div class="cell center">$[[item.cost]]</div>
                 <div class="cell center">[[item.seller.name]]</div>
                 <div class="cell center" style="width:4em;">
-                    <div class="btn" style="padding:0.55rem;" action="removeFromCart" target="[[item.id]]">Remove</div>
+                    <div class="btn red" style="padding:0.55rem;" action="removeFromCart" target="[[item.id]]">Remove</div>
                 </div>
             </div>
         [[?==]]
+        <div class="row">
+            <span class="cell center">Items: <span target="cartSize">[[cartSize]]</span></span>
+        </div>
+        <div class="row">
+            <span class="cell center">Total Cost: $<span target="cartCost">[[cartCost]]</span></span>
+        </div>
     </div>
-    <div class="btn flexEnd btnBlue" action="update">Update ✨</div>
-    <div class="flexBr"></div>
     <div class="btn flexEnd" action="shipping">Shipping 🚢</div>
     [[?==]]
 </div>
