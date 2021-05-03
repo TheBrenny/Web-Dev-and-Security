@@ -41,3 +41,10 @@
         padding-bottom: 0.1em;
         border-bottom-width: 0.3em;
         border-color: #FE9E72; }
+
+.aboutNavbar {
+  width: 22%;
+  position: sticky;
+  top: 4em;
+  align-self: flex-start;
+  margin: 0; }

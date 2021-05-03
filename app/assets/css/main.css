@@ -98,3 +98,121 @@ a {
     .table .row .cell:first-child:nth-last-child(8) ~ .cell {
       width: 12.5%;
       flex-grow: 1; }
+
+hr {
+  width: 100%;
+  height: 1px;
+  border: none;
+  background: #000;
+  background: linear-gradient(90deg, rgba(254, 158, 114, 0) 0%, rgba(254, 158, 114, 0.75) 20% 80%, rgba(254, 158, 114, 0) 100%); }
+
+body {
+  background: #f7f5f3; }
+
+.header-outer {
+  display: flex;
+  align-items: center;
+  position: sticky;
+  height: 120px;
+  top: -50px; }
+  .header-outer .header-inner {
+    height: 70px;
+    position: sticky;
+    top: 0; }
+
+.error {
+  background: #E85F5C;
+  text-align: center;
+  border-radius: 0.5em;
+  padding: 1em 0.5em;
+  font-size: 0.75em;
+  margin-top: 0.75em; }
+  .error > p {
+    margin: 0; }
+
+.displayBox {
+  background: #559CAD;
+  width: 400px;
+  border-radius: 1em;
+  padding: 1.5em;
+  display: flex;
+  flex-flow: column;
+  gap: 0.15em;
+  font-size: 1.25em; }
+  .displayBox > h1 {
+    text-align: center; }
+
+.loginBox label {
+  position: relative;
+  pointer-events: none;
+  top: -37.5px;
+  left: 4px;
+  transition: 0.2s ease all;
+  height: 0;
+  opacity: 0.6; }
+
+.loginBox input,
+.loginBox input select {
+  height: 2.5em; }
+
+.loginBox input:focus + label,
+.loginBox input:not(:focus):valid + label {
+  top: -48px;
+  left: 6px;
+  font-size: 0.5em; }
+
+.loginBox input[type="text"], .loginBox input[type="password"] {
+  padding-top: 1em; }
+
+input,
+select {
+  background: #e3dcd4;
+  width: 100%;
+  transition: 0.2s ease border;
+  font-size: 1em;
+  padding: 0.3em;
+  outline: none;
+  border: none;
+  border-bottom: 0.2em solid rgba(254, 158, 114, 0);
+  border-radius: 0.2em;
+  box-shadow: none;
+  display: block; }
+  input:focus,
+  select:focus {
+    border-bottom: 0.2em solid #FE9E72;
+    outline: none; }
+
+.btn,
+input[type="submit"] {
+  border: none;
+  background: #319757;
+  padding: 1rem;
+  border-radius: 0.6rem;
+  transition: 0.2s ease-out;
+  user-select: none;
+  text-align: center;
+  color: #f7f5f3;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .btn:not([disabled]),
+  input[type="submit"]:not([disabled]) {
+    cursor: pointer; }
+  .btn:not([disabled]):hover,
+  input[type="submit"]:not([disabled]):hover {
+    color: #FE9E72;
+    filter: brightness(105%); }
+  .btn:not([disabled]):active,
+  input[type="submit"]:not([disabled]):active {
+    filter: brightness(75%); }
+  .btn.white,
+  input[type="submit"].white {
+    background: #e3dcd4;
+    color: #001524; }
+  .btn.red,
+  input[type="submit"].red {
+    background: #E85F5C; }
+  .btn.blue,
+  input[type="submit"].blue {
+    background: #559CAD; }

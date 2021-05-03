@@ -65,3 +65,11 @@ $navLineHeightMax: 0.3em;
         }
     }
 }
+
+.aboutNavbar {
+    width: 22%;
+    position: sticky;
+    top: $navHeight;
+    align-self: flex-start;
+    margin: 0;
+}
