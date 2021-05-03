@@ -28,27 +28,27 @@ class Database {
 
     async getAllProducts(options, addNameLike) {
         if ((!!addNameLike || addNameLike === undefined) && typeof options === 'string') options = `name LIKE "%${options}%"`;
-        options = this.handleOptions(options);
+        options = handleOptions(options);
         let query = !options.fullQuery ? `SELECT * FROM products INNER JOIN users ON products.owner=users.id WHERE ${options.query}` : options.query;
         return this.query(query);
     }
 
     async getAvailableProducts(options, addNameLike) {
         if ((!!addNameLike || addNameLike === undefined) && typeof options === 'string') options = `name LIKE "%${options}%"`;
-        options = this.handleOptions(options);
+        options = handleOptions(options);
         let query = !options.fullQuery ? `SELECT * FROM products INNER JOIN users ON products.owner=users.id WHERE products.purchased_date IS NULL AND ${options.query}` : options.query;
         return this.query(query);
     }
     async getRandomAvailableProducts(options, addNameLike) {
         if ((!!addNameLike || addNameLike === undefined) && typeof options === 'string') options = `name LIKE "%${options}%"`;
-        options = this.handleOptions(options);
+        options = handleOptions(options);
         let query = !options.fullQuery ? `SELECT * FROM products INNER JOIN users ON products.owner=users.id WHERE products.purchased_date IS NULL AND ${options.query} ORDER BY RAND()` : options.query;
         return this.query(query);
     }
 
     async getPurchasedProducts(options, addNameLike) {
         if ((!!addNameLike || addNameLike === undefined) && typeof options === 'string') options = `name LIKE "%${options}%"`;
-        options = this.handleOptions(options);
+        options = handleOptions(options);
         let query = !options.fullQuery ? `SELECT * FROM products INNER JOIN users ON products.owner=users.id WHERE products.purchased_date > 0 AND ${options.query}` : options.query;
         return this.query(query);
     }
@@ -62,8 +62,7 @@ class Database {
     }
 }
 
-module.exports = new Database();
-module.exports.handleOptions = function (options) {
+function handleOptions(options) {
     if (!options || typeof options === 'string') {
         options = {
             query: options || "1=1"
@@ -74,6 +73,13 @@ module.exports.handleOptions = function (options) {
     if (typeof options.pagination === 'number') options.pagination = module.exports.pagination(options.pagination);
     options.fullQuery = !!options.fullQuery;
     return options;
-};
+}
+
+function pagination(page) {
+    return [page * module.exports.paginationSize, module.exports.paginationSize];
+}
+
+module.exports = new Database();
+module.exports.handleOptions = handleOptions;
 module.exports.paginationSize = 10;
-module.exports.pagination = (page) => [page * module.exports.paginationSize, module.exports.paginationSize];
+module.exports.pagination = pagination;
