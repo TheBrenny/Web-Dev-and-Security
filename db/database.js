@@ -7,6 +7,10 @@ const db = require("./db");
 class Database {
     constructor() {
         this.db = db;
+        // TODO: Split this into more models
+        // something like
+        // this.accounts = require("./models/accounts")(this);
+        // and that would create an account class/object which can call the query method in this class.
     }
 
     async query(query) {
