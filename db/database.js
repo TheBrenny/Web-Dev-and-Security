@@ -25,6 +25,9 @@ class Database {
     async getUser(username) {
         return this.query(`SELECT * FROM users WHERE username="${username}" AND active=1`);
     }
+    async getUserByID(id) {
+        return this.query(`SELECT * FROM users WHERE id="${id}" AND active=1`);
+    }
 
     async getAllProducts(options, addNameLike) {
         if ((!!addNameLike || addNameLike === undefined) && typeof options === 'string') options = `name LIKE "%${options}%"`;
@@ -53,11 +56,29 @@ class Database {
         return this.query(query);
     }
 
-    async getListedProducts(...list) {
+    async getProducts(...list) {
         list = list.reduce((a, c) => a.concat(c), []); // make a flattened copy so we stop breaking things
         for (let i in list) list[i] = "products.id=" + list[i];
         list = list.length > 0 ? list.join(" OR ") : "1=0";
         let query = `SELECT * FROM products INNER JOIN users ON products.owner=users.id WHERE ${list}`;
+        return this.query(query);
+    }
+
+    async insertSellable(item) {
+        // Double check the keys
+        let keepKeys = ["name", "description", "image", "owner", "cost", "quantity", "post_date", "purchased_date", "purchased_by"];
+        for (let k of Object.keys(item))
+            if (!keepKeys.includes(k)) delete item[k]; // no foreign/untrusted keys please.
+
+        let cols = Object.keys(item).join(", ");
+        let vals = JSON.stringify(Object.values(item)).substring(1, -1);
+
+        let query = `INSERT INTO products (${cols}) VALUES (${vals})`;
+        return this.query(query);
+    }
+
+    async getComments(productID) {
+        let query = `SELECT * FROM comments INNER JOIN users ON comments.user=users.id WHERE comments.product=${productID}`;
         return this.query(query);
     }
 }
