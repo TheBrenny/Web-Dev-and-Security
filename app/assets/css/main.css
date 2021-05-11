@@ -52,6 +52,8 @@ a {
 
 .flex {
   display: flex; }
+  .flex.row {
+    flex-direction: row; }
 
 .table {
   margin-top: 1em;
@@ -165,12 +167,14 @@ body {
   padding-top: 1em; }
 
 input,
-select {
+select,
+textarea {
   background: #e3dcd4;
   width: 100%;
   transition: 0.2s ease border;
   font-size: 1em;
   padding: 0.3em;
+  padding-top: 0.5em;
   outline: none;
   border: none;
   border-bottom: 0.2em solid rgba(254, 158, 114, 0);
@@ -178,7 +182,8 @@ select {
   box-shadow: none;
   display: block; }
   input:focus,
-  select:focus {
+  select:focus,
+  textarea:focus {
     border-bottom: 0.2em solid #FE9E72;
     outline: none; }
 
@@ -216,3 +221,10 @@ input[type="submit"] {
   .btn.blue,
   input[type="submit"].blue {
     background: #559CAD; }
+
+.flexbreak {
+  flex-basis: 100%;
+  height: 0; }
+
+[disabled] {
+  cursor: no-drop; }

@@ -12,7 +12,7 @@ There is also a live version available at Heroku: https://web-dev-and-security.h
 Based on the feedback from the first assignment, the following todo tree has been made (including general improvements for Project 2):
 
  - [ ] Address feedback from Project 1
-   - [ ] ~~Show quantity of items to the user in the cart.~~ This is more like an eBay site.
+   - [x] Show quantity of items to the user in the cart.
    - [ ] ~~Update button to change the quantity or remove items from cart (instead of delete).~~ Not quantity anymore
    - [ ] Add a sell page for users
    - [x] Total cost of cart is missing

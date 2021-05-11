@@ -15,8 +15,12 @@ document.onreadystatechange = function (ev) {
     if (!!shipping) shipping.addEventListener('click', function (_e) {
         document.location.pathname = "/cart/shipping";
     });
+
     const checkout = $(`.btn[action="processCheckout"]`);
     if (!!checkout) checkout.addEventListener('click', processCheckout);
+
+    const sell = $(`.btn[action="sellProduct"]`);
+    if (!!sell) sell.addEventListener('click', sellProduct);
 };
 
 function modifyCart(event, modName) {
@@ -106,4 +110,41 @@ function processCheckout(event) {
         .then(() => wait(3000))
         .then(() => event.target.classList.remove("loading"))
         .then(() => event.target.textContent = "Proceed 💸");
+}
+
+function sellProduct(event) {
+    let name = $(`[name="name"]`).value;
+    let cost = $(`[name="cost"]`).value;
+    let description = $(`[name="description"]`).value;
+
+    let json = {
+        name,
+        cost,
+        description,
+    };
+
+    // TODO: Finish this pipeline flow.
+    fetch("/sell", {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(json)
+        })
+        .then(res => res.json())
+        .then((json) => {
+            console.log(json);
+            if (json.success) {
+                document.location.pathname = "/item/" + json.message;
+            } else {
+                throw new Error(json.message);
+            }
+        })
+        .catch(async () => {
+            let r = event.target.textContent;
+            event.target.textContent = "❌";
+            await wait(3000);
+            event.target.textContent = r;
+        });
 }

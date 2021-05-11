@@ -1,6 +1,5 @@
 const session = require("./session");
 
-
 function getPageOptions(req, listings) {
     listings = !!listings ? getListings(listings) : [];
 
@@ -40,15 +39,20 @@ function getNavList(req) {
             active: false
         },
         {
+            slug: "/sell",
+            title: "Sell",
+            active: false
+        },
+        {
             slug: isAuthed ? "/account" : "/login",
             title: isAuthed ? session(req).name() : "Login",
             active: false
         },
-        {
-            slug: "/about",
-            title: "About",
-            active: false
-        },
+        // {
+        //     slug: "/about",
+        //     title: "About",
+        //     active: false
+        // },
     ];
 
     for (let i in navList) {
@@ -77,8 +81,14 @@ function getListings(listings) {
     return outListings;
 }
 
+function getDateString(dateObj) {
+    let iso = dateObj.toISOString();
+    return iso.substring(0, iso.indexOf('T'));
+}
+
 module.exports = {
     getPageOptions,
     getNavList,
     getListings,
+    getDateString,
 };

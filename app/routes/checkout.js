@@ -21,7 +21,7 @@ router.post("/cart/add", async (req, res) => {
         return;
     }
 
-    let obj = await Database.getListedProducts(itemID);
+    let obj = await Database.getProducts(itemID);
     if (obj.length === 0) {
         res.json({
             success: false,
@@ -76,12 +76,13 @@ router.post("/cart/payment", checks.hasCart, async (req, res) => {
 });
 router.get("/cart/checkout", checks.hasCart, async (req, res) => {
     res.render("cart/checkout", {
-        ...helpers.getPageOptions(req, await Database.getListedProducts(session(req).getCart())),
+        ...helpers.getPageOptions(req, await Database.getProducts(session(req).getCart())),
         address: session(req).getAddress(),
         voucher: session(req).getVoucher()
     });
 });
 router.post("/cart/checkout", checks.hasCart, async (req, res) => {
+    // TODO: Make this actually hit the DB!
     session(req).clearCart();
     res.json({
         success: true

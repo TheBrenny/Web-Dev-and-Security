@@ -9,12 +9,6 @@ router.get("/", async (req, res) => {
 });
 
 
-router.get("/sell", async (req, res) => {
-    res.render("comingsoon", {
-        ...helpers.getPageOptions(req, [])
-    });
-});
-
 // Ideally these would "use" specific endpoints
 router.use(require("./listings"));
 router.use(require("./account"));

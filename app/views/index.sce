@@ -43,6 +43,9 @@
             </div>
         </div>
     </div>
+    <div class="about" style="text-align:center;margin-top:0.7em;font-size:2.5rem;">
+        <a href="/about">About us!</a>
+    </div>
 </div>
 
 [[i= partials/footer ]]

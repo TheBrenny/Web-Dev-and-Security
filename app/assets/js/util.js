@@ -6,8 +6,8 @@ function $$(selector) {
     return document.querySelectorAll(selector);
 }
 
-async function wait(time) {
+async function wait(time, v) {
     return new Promise(function (resolve) {
-        setTimeout(resolve, time);
+        setTimeout(() => resolve(v), time);
     });
 }

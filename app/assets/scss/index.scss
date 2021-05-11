@@ -25,6 +25,8 @@
         flex-basis: 50%;
         flex-grow: 1;
         text-align: center;
+        max-height: 500px;
+        overflow-y: scroll;
 
         h1 {
             height: 75px;

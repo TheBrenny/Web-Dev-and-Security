@@ -71,6 +71,10 @@ a {
 
 .flex {
     display: flex;
+
+    &.row {
+        flex-direction: row;
+    }
 }
 
 .table {
@@ -193,12 +197,14 @@ body {
 }
 
 input,
-select {
+select,
+textarea {
     background: $darkWhite;
     width: 100%;
     transition: 0.2s ease border;
     font-size: 1em;
     padding: 0.3em;
+    padding-top: 0.5em;
     outline: none;
     border: none;
     border-bottom: 0.2em solid rgba($accent, 0);
@@ -252,4 +258,13 @@ input[type="submit"] {
     &.blue {
         background: $main;
     }
+}
+
+.flexbreak {
+    flex-basis: 100%;
+    height: 0;
+}
+
+[disabled] {
+    cursor: no-drop;
 }
