@@ -38,7 +38,7 @@
             <hr>
             <div class="flex homeBlockInner" style="flex-flow: row wrap;">
                 [[e= item in listings ]]
-                    [[c= components/listing || item=item ]]
+                    [[c= components/listingcard || item=item ]]
                 [[?==]]
             </div>
         </div>

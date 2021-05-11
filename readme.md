@@ -14,13 +14,13 @@ Based on the feedback from the first assignment, the following todo tree has bee
  - [ ] Address feedback from Project 1
    - [x] Show quantity of items to the user in the cart.
    - [ ] ~~Update button to change the quantity or remove items from cart (instead of delete).~~ Not quantity anymore
-   - [ ] Add a sell page for users
+   - [x] Add a sell page for users
    - [x] Total cost of cart is missing
    - [ ] Add a checkout button **(contest this in the Project 2 writeup)** Maybe show a smaller looking cart on each page?
  - [ ] Confirm that all parts of the assignment follow the MVC model
    - [ ] Make a MD file labelling all the files and stating it's role in the MVC paradigm.
  - [ ] Add More Dynamic Pages
-   - [ ] Add 5 more dynamic pages (the Sell flow)?
+   - [ ] Add 5 more dynamic pages
  - [ ] Call the DB from the Controller of the MVC
    - [ ] Confirm that this actually happens
    - [ ] Have a "rich variety" of tables with varying data types

@@ -5,7 +5,7 @@ const sessionSchema = {
         authed: false,
         badLogin: false
     },
-    cart: {} // key is item id, value is quantity
+    cart: {} // key is item id, value is item object
 };
 
 const general = {

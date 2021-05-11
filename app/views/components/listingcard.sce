@@ -1,4 +1,4 @@
-<a href="" class="listing">
+<a href="/listings/[[item.id]]" class="listing">
     <img src="/assets/img/products/[[item.image]]" alt="Listing Image" class="listingImage">
     <div class="listingCaption">
         <p>

@@ -35,6 +35,10 @@
   #listingTable .row:not(.head):nth-child(2n+1) {
     background: #ede8e4; }
 
+#listingTable .row.linkedRow:hover {
+  background-color: rgba(49, 151, 87, 0.2);
+  cursor: pointer; }
+
 .product {
   gap: 2em; }
   .product > * {

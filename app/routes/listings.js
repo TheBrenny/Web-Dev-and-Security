@@ -12,6 +12,19 @@ router.get("/listings", async (req, res) => {
     });
 });
 
+router.get("/listings/:id", async (req, res) => {
+    let item = (await Database.getProducts(req.params.id))[0];
+    let sold = item.products_purchased_by != null;
+    console.log(item.products_purchased_by != null);
+    console.log(item.products_purchased_by);
+    res.render("listings/item", {
+        ...helpers.getPageOptions(req, []),
+        item,
+        sold,
+        comments: (await Database.getComments(req.params.id))
+    });
+});
+
 router.get("/listings/search/", async (_req, res) => {
     res.redirect("/listings");
 });
@@ -71,20 +84,6 @@ router.post("/sell", async (req, res) => {
     res.json({
         success: tryInsert.affectedRows == 1,
         message: tryInsert.insertId
-    });
-});
-
-router.get("/item", async (req, res) => res.redirect("/listings"));
-router.get("/item/:id", async (req, res) => {
-    let item = (await Database.getProducts(req.params.id))[0];
-    let sold = item.products_purchased_by != null;
-    console.log(item.products_purchased_by != null);
-    console.log(item.products_purchased_by);
-    res.render("listings/item", {
-        ...helpers.getPageOptions(req, []),
-        item,
-        sold,
-        comments: (await Database.getComments(req.params.id))
     });
 });
 

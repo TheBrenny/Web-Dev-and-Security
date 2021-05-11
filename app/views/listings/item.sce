@@ -17,7 +17,7 @@
         [[?= sold ]]
             <div class="btn red" disabled>Sold to: [[ item.users_username]]</div>
         [[3= ]]
-            <div class="btn" action="addToCart">Add to Cart</div>
+            <div class="btn" action="addToCart" target="[[item.products_id]]">Add to Cart</div>
         [[?==]]
     </div>
     <hr>

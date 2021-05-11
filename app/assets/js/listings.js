@@ -5,8 +5,11 @@ document.onreadystatechange = function (ev) {
         document.location.pathname = "/listings/search/" + searchBar.value;
     });
 
+    const rows = $$(`.row.linkedRow`);
+    rows.forEach((r) => r.addEventListener('click', (_e) => document.location.href = r.attributes.target.value));
+
     const addButtons = $$(`.btn[action="addToCart"]`);
-    addButtons.forEach((btn) => btn.addEventListener("click", (e) => modifyCart(e, "Add")));
+    addButtons.forEach((btn) => btn.addEventListener("click", (e) => (e.stopPropagation(), modifyCart(e, "Add"))));
 
     const removeButtons = $$(`.btn[action="removeFromCart"]`);
     removeButtons.forEach((btn) => btn.addEventListener("click", (e) => modifyCart(e, "Remove")));
@@ -136,7 +139,7 @@ function sellProduct(event) {
         .then((json) => {
             console.log(json);
             if (json.success) {
-                document.location.pathname = "/item/" + json.message;
+                document.location.pathname = "/listings/" + json.message;
             } else {
                 throw new Error(json.message);
             }

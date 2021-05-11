@@ -16,7 +16,8 @@ function isGuest(req, res, next) {
 }
 
 function hasCart(req, res, next) {
-    if (session(req).getCart().length == 0) res.redirect("/cart");
+    console.log(Object.keys(session(req).getCart()));
+    if (Object.keys(session(req).getCart()).length === 0) res.redirect("/cart");
     else next();
 }
 

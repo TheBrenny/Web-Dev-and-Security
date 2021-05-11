@@ -52,6 +52,11 @@
             background: lighten($darkWhite, 5);
         }
     }
+
+    .row.linkedRow:hover {
+        background-color: rgba($green, 0.2);
+        cursor: pointer;
+    }
 }
 
 .product {
