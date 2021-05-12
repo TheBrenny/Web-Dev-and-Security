@@ -20,11 +20,11 @@ Based on the feedback from the first assignment, the following todo tree has bee
  - [ ] Confirm that all parts of the assignment follow the MVC model
    - [ ] Turn the Database file into actual models.
    - [ ] Make a MD file labelling all the files and stating it's role in the MVC paradigm.
- - [ ] Add More Dynamic Pages
-   - [ ] Add 5 more dynamic pages
- - [ ] Call the DB from the Controller of the MVC
-   - [ ] Confirm that this actually happens
-   - [ ] Have a "rich variety" of tables with varying data types
+ - [x] Add More Dynamic Pages
+   - [x] Add 5 more dynamic pages
+ - [x] Call the DB from the Controller of the MVC
+   - [x] Confirm that this actually happens
+   - [x] Have a "rich variety" of tables with varying data types
  - [ ] SQL Injection Prevention
    - [ ] Use PreparedStatements to prevent SQL Injections
    - [ ] Lookup Prepared Statements

@@ -1,4 +1,5 @@
 INSERT INTO `users` (`username`, `password`, `plainPassword`) VALUES
+    ('Guest', '000000000000000000000000000000000000000000000000000000000000', cast(0x00FF00FF00FF00FF as VARCHAR(8))),
     ('Demo', '$2b$12$52ZK8k3mkbBn6r7LnStGbe/2UN5PO5Noth32RrT/Ha3UEQK2ntgP6', 'password'),
     ('Tom', '$2b$12$5tbqyh21TIG3f5WzjavJ8OrmIU2jM75jM8KNz1Tkh08MlzTYdI//y', 'tomsaccount'),
     ('Dan', '$2b$12$w8AGe8UYQNRgLz86Abrg/OQ4ZPnfXA/ivnX2hMUvmA9kawAW.LDZW', 'dansaccount'),

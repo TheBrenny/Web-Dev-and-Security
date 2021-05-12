@@ -2,7 +2,7 @@
 [[?= link == 'true' ]]
     linkedRow
 [[?==]]
-" target="listings/[[item.id]]">
+" target="/listings/[[item.id]]">
     <div class="cell center"><img src="/assets/img/products/[[item.image]]" alt="Preview Image"></div>
     <div class="cell center">[[item.name]]</div>
     <div class="cell center">[[item.description]]</div>

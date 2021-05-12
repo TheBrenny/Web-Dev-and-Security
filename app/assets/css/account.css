@@ -1,0 +1,40 @@
+.loginBox input,
+.loginBox select,
+.loginBox .btn {
+  height: 2.5em; }
+
+.loginBox input[type="text"],
+.loginBox input[type="password"] {
+  padding-top: 1em; }
+  .loginBox input[type="text"] + label,
+  .loginBox input[type="password"] + label {
+    position: relative;
+    pointer-events: none;
+    top: -37.5px;
+    left: 4px;
+    transition: 0.2s ease all;
+    height: 0;
+    opacity: 0.6; }
+  .loginBox input[type="text"]:focus + label,
+  .loginBox input[type="text"]:not(:focus):valid + label,
+  .loginBox input[type="password"]:focus + label,
+  .loginBox input[type="password"]:not(:focus):valid + label {
+    top: -48px;
+    left: 6px;
+    font-size: 0.5em; }
+
+.loginBox .actions.row {
+  gap: 1em;
+  width: auto; }
+  .loginBox .actions.row .btn {
+    flex-basis: 100%; }
+
+.userDetails {
+  justify-content: space-between;
+  align-items: center;
+  padding: 0em 7.5vw;
+  gap: 1em; }
+  .userDetails h2 {
+    flex-grow: 1; }
+  .userDetails .btn {
+    min-width: 80px; }

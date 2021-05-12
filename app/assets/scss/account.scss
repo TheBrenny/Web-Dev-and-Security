@@ -1,0 +1,54 @@
+.loginBox {
+
+    input,
+    select,
+    .btn {
+        height: 2.5em;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        padding-top: 1em;
+
+        +label {
+            position: relative;
+            pointer-events: none;
+            top: -37.5px;
+            left: 4px;
+            transition: 0.2s ease all;
+            height: 0;
+            opacity: 0.6;
+        }
+
+        &:focus+label,
+        &:not(:focus):valid+label {
+            top: -48px;
+            left: 6px;
+            font-size: 0.5em;
+        }
+    }
+
+    .actions.row {
+        gap: 1em;
+        width: auto;
+
+        .btn {
+            flex-basis: 100%;
+        }
+    }
+}
+
+.userDetails {
+    justify-content: space-between;
+    align-items: center;
+    padding: 0em 7.5vw;
+    gap: 1em;
+
+    h2 {
+        flex-grow: 1;
+    }
+
+    .btn {
+        min-width: 80px;
+    }
+}

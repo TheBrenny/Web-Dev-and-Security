@@ -4,6 +4,9 @@ const db = require("./db");
 //       Plan is to move the queries into their individual schemas,
 //       so each Class can do it's own operations, rather than
 //       having the DB class handle it all.
+// TODO: Might be worthwhile to handle specific object types, such
+//       as the buffer, to turn it into a binary string, or a number
+//       that can be bit operated on.
 class Database {
     constructor() {
         this.db = db;
@@ -29,8 +32,17 @@ class Database {
     async getUser(username) {
         return this.query(`SELECT * FROM users WHERE username="${username}" AND active=1`);
     }
+    // TODO: those queries that return a single result should .then(r => r[0]).
+    // This is a maybe tho. idk if I have time lol.
     async getUserByID(id) {
         return this.query(`SELECT * FROM users WHERE id="${id}" AND active=1`);
+    }
+
+    async updateAccount(targetID, newDetails) {
+        let entries = Object.entries(newDetails).map(e => e[0] + "=" + JSON.stringify(e[1])).join(", ");
+        let query = `UPDATE users SET ${entries} WHERE id=${targetID}`;
+        console.log(query);
+        return this.query(query);
     }
 
     async getAllProducts(options, addNameLike) {
@@ -38,6 +50,12 @@ class Database {
         options = handleOptions(options);
         let query = !options.fullQuery ? `SELECT * FROM products INNER JOIN users ON products.owner=users.id WHERE ${options.query}` : options.query;
         return this.query(query);
+    }
+
+    async getProductsSoldBy(id, avilableOnly) {
+        if (avilableOnly === undefined || avilableOnly === null) avilableOnly = true;
+        let sql = `SELECT * FROM products INNER JOIN users ON products.owner=users.id WHERE products.owner=${id}`;
+        return this.query(sql);
     }
 
     async getAvailableProducts(options, addNameLike) {

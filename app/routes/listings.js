@@ -97,7 +97,7 @@ router.get("/sell", checks.isAuthed, async (req, res) => {
     });
 });
 
-router.post("/sell", async (req, res) => {
+router.post("/sell", checks.isAuthed, async (req, res) => {
     let sess = session(req);
 
     if (!sess.isAuthed()) {
