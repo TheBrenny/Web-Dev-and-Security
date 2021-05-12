@@ -6,7 +6,7 @@ document.onreadystatechange = function (ev) {
     });
 
     const rows = $$(`.row.linkedRow`);
-    rows.forEach((r) => r.addEventListener('click', (_e) => document.location.href = r.attributes.target.value));
+    rows.forEach((r) => r.addEventListener('click', (_e) => document.location.href = r.getAttribute("target")));
 
     const addButtons = $$(`.btn[action="addToCart"]`);
     addButtons.forEach((btn) => btn.addEventListener("click", (e) => (e.stopPropagation(), modifyCart(e, "Add"))));
@@ -24,6 +24,9 @@ document.onreadystatechange = function (ev) {
 
     const sell = $(`.btn[action="sellProduct"]`);
     if (!!sell) sell.addEventListener('click', sellProduct);
+
+    const comment = $(`.btn[action="postComment"]`);
+    if (!!comment) comment.addEventListener('click', postComment);
 };
 
 function modifyCart(event, modName) {
@@ -126,15 +129,19 @@ function sellProduct(event) {
         description,
     };
 
-    // TODO: Finish this pipeline flow.
-    fetch("/sell", {
+    Promise.resolve()
+        .then(() => event.target.classList.add("loading"))
+        .then(() => {
+            if ([name, cost, description].includes("")) throw new Error("All fields are required.");
+        })
+        .then(() => fetch("/sell", {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(json)
-        })
+        }))
         .then(res => res.json())
         .then((json) => {
             console.log(json);
@@ -144,8 +151,59 @@ function sellProduct(event) {
                 throw new Error(json.message);
             }
         })
-        .catch(async () => {
+        .catch(async (e) => {
+            console.log(e);
             let r = event.target.textContent;
+            event.target.classList.remove("loading");
+            event.target.textContent = "❌";
+            await wait(3000);
+            event.target.textContent = r;
+        });
+}
+
+function postComment(event) {
+    let commentBox = $(`[name="commentBox"]`);
+    let comment = commentBox.value;
+    commentBox.value = "";
+
+    let id = event.target.getAttribute("target");
+    let r = event.target.textContent;
+
+    Promise.resolve()
+        .then(() => event.target.classList.add("loading"))
+        .then(() => {
+            if ([comment].includes("")) throw new Error("Comment is required.");
+        })
+        .then(() => fetch(`/listings/${id}/comment`, {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                comment
+            })
+        }))
+        .then(res => res.json())
+        .then(json => {
+            console.log(json);
+            if (json.success) {
+                event.target.textContent = "✔";
+                scetchInsert($(".comments > div:last-of-type"), "beforeBegin", scetch.comment, {
+                    comment: json.message
+                });
+            } else {
+                throw new Error(json.message);
+            }
+        })
+        .then(() => wait(1000))
+        .then(() => {
+            event.target.textContent = r;
+        })
+        .then(() => {})
+        .catch(async (e) => {
+            console.error(e);
+            event.target.classList.remove("loading");
             event.target.textContent = "❌";
             await wait(3000);
             event.target.textContent = r;

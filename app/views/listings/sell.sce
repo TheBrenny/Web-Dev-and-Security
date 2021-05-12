@@ -11,7 +11,7 @@
             <input type="text" name="name" placeholder="Item Name" />
             <span class="costWrapper"><input type="number" name="cost" placeholder="Cost" /></span>
             <!-- <label for="cost">$</label> -->
-            <textarea placeholder="Description" class="productDescription" name="description" style="resize:none;"></textarea>
+            <textarea placeholder="Description" class="productDescription" name="description"></textarea>
         </div>
     </div>
     <div class="flex row actions">

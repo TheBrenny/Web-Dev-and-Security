@@ -115,3 +115,29 @@
         }
     }
 }
+
+.container.comments {
+    gap: 0.5em;
+
+    .comment {
+        padding: 0em 0.5em;
+        background-image: linear-gradient(90deg, darken($white, 5) 25%, darken($white, 15) 75%);
+        transition: background-position-x 0.15s ease-out;
+        background-position-x: 100%;
+        background-size: 150%;
+
+        &:hover {
+            background-position-x: 0%;
+            .metadata {
+                color: $black;
+            }
+        }
+
+        .metadata {
+            font-size: 0.7em;
+            margin-bottom: 0.5em;
+            color: darken($darkWhite, 10);
+            transition:color 0.15s, ease-out;
+        }
+    }
+}

@@ -85,6 +85,24 @@ class Database {
         let query = `SELECT * FROM comments INNER JOIN users ON comments.user=users.id WHERE comments.product=${productID}`;
         return this.query(query);
     }
+
+    async insertComment(comment) {
+        let keepKeys = ["product", "comment", "comment_date", "user"];
+        for (let k of Object.keys(comment))
+            if (!keepKeys.includes(k)) delete comment[k]; // no foreign/untrusted keys please.
+
+        let cols = Object.keys(comment).join(", ");
+        let vals = JSON.stringify(Object.values(comment)).substring(1, -1);
+
+        let query = `INSERT INTO comments (${cols}) VALUES (${vals})`;
+        console.log(query);
+        return this.query(query);
+    }
+
+    async getSpecificComment(id) {
+        let query = `SELECT * FROM comments INNER JOIN users ON comments.user=users.id WHERE comments.id=${id}`;
+        return this.query(query);
+    }
 }
 
 function handleOptions(options) {

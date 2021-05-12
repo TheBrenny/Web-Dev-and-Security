@@ -18,6 +18,7 @@ Based on the feedback from the first assignment, the following todo tree has bee
    - [x] Total cost of cart is missing
    - [ ] Add a checkout button **(contest this in the Project 2 writeup)** Maybe show a smaller looking cart on each page?
  - [ ] Confirm that all parts of the assignment follow the MVC model
+   - [ ] Turn the Database file into actual models.
    - [ ] Make a MD file labelling all the files and stating it's role in the MVC paradigm.
  - [ ] Add More Dynamic Pages
    - [ ] Add 5 more dynamic pages

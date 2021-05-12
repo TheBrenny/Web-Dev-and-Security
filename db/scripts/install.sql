@@ -27,6 +27,7 @@ CREATE TABLE `comments` (
   `user` INTEGER NOT NULL,
   `product` INTEGER NOT NULL,
   `comment` VARCHAR(500) NOT NULL,
+  `comment_date` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`user`) REFERENCES `users` (`id`),
   FOREIGN KEY (`product`) REFERENCES `products` (`id`)

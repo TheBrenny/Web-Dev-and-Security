@@ -26,6 +26,9 @@
         "HOST": "webdevsec",
         "NODE_ENV": "dev"
       },
+      "runtimeArgs": [
+        "--preserve-symlinks"
+      ],
       "name": "dev",
       "program": "${workspaceFolder}/node_modules/gulp/bin/gulp.js",
       "request": "launch",
