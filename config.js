@@ -16,7 +16,14 @@ module.exports.env = {
 };
 module.exports.env.isDev = module.exports.env.node.startsWith("dev") || module.exports.env.deploy.startsWith("local") || isDevSwitch;
 
-module.exports.helmet = !module.exports.env.gulping ? {} : {
+module.exports.helmet = !module.exports.env.gulping ? {
+    contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+            scriptSrc: ["'self'", "'unsafe-inline'"] // TODO: Change this to `nonce-`s
+        }
+    }
+} : {
     contentSecurityPolicy: false
 };
 
