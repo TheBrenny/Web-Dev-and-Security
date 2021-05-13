@@ -20,7 +20,7 @@ module.exports.helmet = !module.exports.env.gulping ? {
     contentSecurityPolicy: {
         useDefaults: true,
         directives: {
-            scriptSrc: ["'self'", "'unsafe-inline'"] // TODO: Change this to `nonce-`s
+            scriptSrc: ["'self'", "'unsafe-inline'"] // TODO: Change this to `nonce-`s -- you can use res.locals.nonce to have the nonce variable available in scetch
         }
     }
 } : {
