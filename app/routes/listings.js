@@ -7,18 +7,18 @@ const session = require("./session");
 router.get("/listings", async (req, res) => {
     res.render("listings/listings", {
         navList: helpers.getNavList(req),
-        ...helpers.getPageOptions(req, await Database.getAvailableProducts()),
+        ...helpers.getPageOptions(req, await Database.listings.searchAvailableProducts()),
         search: ""
     });
 });
 
 router.get("/listings/:id", async (req, res) => {
-    let item = (await Database.getProducts(req.params.id))[0];
+    let item = (await Database.listings.getProducts(req.params.id))[0];
     let sold = item.products_purchased_by != null;
-    let c = (await Database.getComments(req.params.id));
-    for(let cc of c) {
+    let c = (await Database.comments.getComments(req.params.id));
+    for (let cc of c) {
         cc.comments_comment_date = helpers.getDateString(cc.comments_comment_date);
-    } 
+    }
     res.render("listings/item", {
         ...helpers.getPageOptions(req, []),
         item,
@@ -53,13 +53,13 @@ router.post("/listings/:id/comment", async (req, res) => {
         return;
     }
 
-    let tryInsert = await Database.insertComment(data);
+    let tryInsert = await Database.comments.insertComment(data);
     let success = tryInsert.affectedRows == 1;
 
     if (success) {
-        let comment = (await Database.getSpecificComment(tryInsert.insertId))[0];
+        let comment = (await Database.comments.getSpecificComment(tryInsert.affectedID));
         comment.comments_comment_date = helpers.getDateString(comment.comments_comment_date);
-        
+
         res.json({
             success: tryInsert.affectedRows == 1,
             message: comment
@@ -78,7 +78,7 @@ router.get("/listings/search/", async (_req, res) => {
 
 router.get("/listings/search/:query", async (req, res) => {
     res.render("listings/listings", {
-        ...helpers.getPageOptions(req, await Database.getAvailableProducts(req.params.query)),
+        ...helpers.getPageOptions(req, await Database.listings.searchAvailableProducts(req.params.query)),
         search: req.params.query
     });
 });
@@ -86,7 +86,7 @@ router.get("/listings/search/:query", async (req, res) => {
 router.get("/listings/search/:query/all?", async (req, res) => {
     //do a like search and return results
     res.render("listings/listings", {
-        ...helpers.getPageOptions(req, await Database.getAllProducts(req.params.query)),
+        ...helpers.getPageOptions(req, await Database.listings.searchAllProducts(req.params.query)),
         search: req.params.query
     });
 });
@@ -126,11 +126,11 @@ router.post("/sell", checks.isAuthed, async (req, res) => {
     for (let k of Object.keys(data))
         if (!keepKeys.includes(k)) delete data[k]; // no foreign/untrusted keys please.
 
-    let tryInsert = await Database.insertSellable(data);
+    let tryInsert = await Database.listings.sellProduct(data);
 
     res.json({
         success: tryInsert.affectedRows == 1,
-        message: tryInsert.insertId
+        message: tryInsert.affectedID
     });
 });
 

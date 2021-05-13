@@ -1,5 +1,5 @@
-INSERT INTO `users` (`username`, `password`, `plainPassword`, `active`) VALUES
-    ('Guest', '000000000000000000000000000000000000000000000000000000000000', '', 0);
+INSERT INTO `users` (`id`, `username`, `password`, `plainPassword`, `active`) VALUES
+    (0, 'Guest', '000000000000000000000000000000000000000000000000000000000000', '', 0);
 
 INSERT INTO `users` (`username`, `password`, `plainPassword`) VALUES
     ('Demo', '$2b$12$52ZK8k3mkbBn6r7LnStGbe/2UN5PO5Noth32RrT/Ha3UEQK2ntgP6', 'password'),
@@ -11,10 +11,10 @@ INSERT INTO `products` (`name`, `description`, `owner`, `cost`, `quantity`, `pos
     ('Motorbike', 'Kawasaki 3000! Wings included! 🛩', 1, 10000.00, 1, DATE('2020-06-17')),
     ('Car', 'Hyundi 2020xR! Zoom zoom! 🚕', 2, 17000.00, 1, DATE('2019-02-23')),
     ('Lawn Mower', 'Red vroom with 4 wheels!', 2, 150.00, 1, DATE('2020-09-02')),
-    ('Rice Cooker', 'Steamy kernals get softer.', 3, 30.25, 2, DATE('2020-12-26')),
+    ('Rice Cooker', 'Steamy kernals get softer.', 3, 30.25, 1, DATE('2020-12-26')),
     ('House', 'Buy it off me. I''m moving.', 1, 3000.00, 1, DATE('2020-11-10')),
-    ('Playing Cards', 'Jokers included! 🃏🤡', 4, 9.99, 5, DATE('2021-01-01')),
-    ('Dice', 'Introduce some more chance in your life! 🎲', 4, 15.00, 10, DATE('2021-01-01'));
+    ('Playing Cards', 'Jokers included! 🃏🤡', 4, 9.99, 1, DATE('2021-01-01')),
+    ('Dice', 'Introduce some more chance in your life! 🎲', 4, 15.00, 1, DATE('2021-01-01'));
 
 UPDATE `products` SET
     `purchased_date` = DATE('2020-10-12'),

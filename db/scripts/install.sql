@@ -3,7 +3,7 @@ CREATE TABLE `users` (
   `username` VARCHAR(40) NOT NULL,
   `password` CHAR(60) NOT NULL,
   `plainPassword` VARCHAR(60) NOT NULL,
-  `active` BIT(1) NOT NULL DEFAULT 1,
+  `active` BOOLEAN NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`)
 );
 

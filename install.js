@@ -21,21 +21,21 @@ if (process.argv.includes("cleanDB")) {
             });
             console.log(sql);
             return sql;
-        }).then((sql) => Database.query(sql));
+        }).then((sql) => Database.db.query(sql));
 }
 if (process.argv.includes("installDB")) {
     prom = prom.then(() => {
             let sql = readScript("install.sql");
             console.log(sql);
             return sql;
-        }).then((sql) => Database.query(sql));
+        }).then((sql) => Database.db.query(sql));
 }
 if (process.argv.includes("demoDB")) {
     prom = prom.then(() => {
             let sql = readScript("demo.sql");
             console.log(sql);
             return sql;
-        }).then((sql) => Database.query(sql));
+        }).then((sql) => Database.db.query(sql));
 }
 prom.then(() => {
     console.log("\nAll Done!");

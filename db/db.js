@@ -27,7 +27,7 @@ module.exports = (async function () {
     return global.db;
 })();
 
-let dbOps = ["query", "end"];
+let dbOps = ["query", "end", "execute"];
 dbOps.forEach(op => {
     global.db[op] = module.exports[op] = async function () {
         let theDB = (await global.db);

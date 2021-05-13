@@ -73,11 +73,12 @@
       flex-shrink: 1; }
 
 .container.comments {
-  gap: 0.5em; }
+  gap: 0.5em;
+  --speed: 0.2s; }
   .container.comments .comment {
     padding: 0em 0.5em;
     background-image: linear-gradient(90deg, #ede8e4 25%, #d8cfc5 75%);
-    transition: background-position-x 0.15s ease-out;
+    transition: background-position-x var(--speed) ease-out;
     background-position-x: 100%;
     background-size: 150%; }
     .container.comments .comment:hover {
@@ -88,4 +89,4 @@
       font-size: 0.7em;
       margin-bottom: 0.5em;
       color: #cec2b6;
-      transition: color 0.15s, ease-out; }
+      transition: color var(--speed) ease-out; }

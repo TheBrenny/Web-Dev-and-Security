@@ -9,6 +9,7 @@
         <input type="password" name="password" required />
         <label for="password">Password</label>
         <input type="submit" value="Login">
+        <a href="/register" class="btn white">Register</a>
         [[?= badLogin ]]
             <div class="error">
                 <p>Invalid username or password. Try again!</p>

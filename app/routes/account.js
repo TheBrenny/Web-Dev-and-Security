@@ -27,13 +27,22 @@ router.get("/logout", checks.isAuthed, async (req, res) => {
 router.get("/account", checks.isAuthed, async (req, res) => {
     res.redirect("/account/" + session(req).getAccount().id);
 });
-
 router.get("/account/:id", async (req, res) => {
-    let account = (await Database.getUserByID(req.params.id))[0];
-    account.activeLetter = account.users_active[0] == 1 ? "A" : "D";
+    let account = (await Database.accounts.getUserByID(req.params.id));
+    account.activeLetter = account.users_active == 1 ? "A" : "D";
     let e = parseInt(req.params.id) === session(req).getAccount().id;
     res.render("account/account", {
-        ...helpers.getPageOptions(req, await Database.getProductsSoldBy(req.params.id, true, true)),
+        ...helpers.getPageOptions(req, await Database.listings.getProductsSoldBy(req.params.id, false)),
+        account,
+        canEdit: e,
+    });
+});
+router.get("/account/:id/all", async (req, res) => {
+    let account = (await Database.accounts.getUserByID(req.params.id));
+    account.activeLetter = account.users_active == 1 ? "A" : "D";
+    let e = parseInt(req.params.id) === session(req).getAccount().id;
+    res.render("account/account", {
+        ...helpers.getPageOptions(req, await Database.listings.getProductsSoldBy(req.params.id, true)),
         account,
         canEdit: e,
     });
@@ -50,11 +59,11 @@ router.post("/account/:id/edit", checks.isAuthed, checks.matchingId, async (req,
     let updateDetails = req.body;
 
     let bad = updateDetails.newPassword != updateDetails.confirmPassword;
-    let target = (await Database.getUser(session(req).getAccount().name));
+    let target = (await Database.accounts.getUser(session(req).getAccount().name));
 
     // found user
     if (!bad && target.length > 0) {
-        const passMatch = updateDetails.currentPassword == target[0].users_plainPassword; //bcrypt.compareSync(password, target[0].password);
+        const passMatch = updateDetails.currentPassword == target.users_plainPassword; //bcrypt.compareSync(password, target[0].password);
         if (passMatch) {
             updateDetails = {
                 username: updateDetails.username,
@@ -65,7 +74,7 @@ router.post("/account/:id/edit", checks.isAuthed, checks.matchingId, async (req,
             for (let k of Object.keys(updateDetails))
                 if (updateDetails[k] == "") delete updateDetails[k];
 
-            bad = !(await Database.updateAccount(target[0].users_id, updateDetails));
+            if (Object.keys(updateDetails).length > 0) bad = !(await Database.accounts.updateAccount(target.users_id, updateDetails));
         } else {
             bad = true;
         }
@@ -98,14 +107,13 @@ router.post("/login", checks.isGuest, async (req, res) => {
     } = req.body;
 
     let bad = false;
-    let target = (await Database.getUser(username));
+    let target = (await Database.accounts.getUser(username));
 
     // found user
-    if (target.length > 0) {
-        const passMatch = password == target[0].users_plainPassword; //bcrypt.compareSync(password, target[0].password);
+    if (target != undefined) {
+        const passMatch = password == target.users_plainPassword; //bcrypt.compareSync(password, target[0].password);
         if (passMatch) {
-            session(req).setAccount(target[0].users_id, target[0].users_username);
-            res.redirect("/");
+            session(req).setAccount(target.users_id, target.users_username);
         } else {
             bad = true;
         }
@@ -117,7 +125,8 @@ router.post("/login", checks.isGuest, async (req, res) => {
     if (bad) {
         session(req).badLogin();
         res.status(401).redirect("/login");
-    }
+    } else res.redirect("/");
+
 });
 
 router.post("/register", checks.isGuest, async (req, res) => {
@@ -127,25 +136,28 @@ router.post("/register", checks.isGuest, async (req, res) => {
     } = req.body;
 
     let bad = false;
-    let target = (await Database.getUser(username));
+    let target = (await Database.accounts.getUser(username));
 
     // found user
-    if (target.length > 0) {
+    if (target !== undefined) {
         bad = true;
     } else {
         let bcryptPass = hashPassword(password);
-        let target = await Database.addUser(username, bcryptPass, password);
-        session(req).setAccount(target[0].insertId, username);
-        res.redirect("/");
+        target = await Database.accounts.addUser(username, bcryptPass, password);
+        bad = !target.success;
     }
 
     if (bad) {
         session(req).badRegister();
         res.status(401).redirect("/register");
+    } else {
+        session(req).setAccount(target.affectedID, username);
+        res.redirect("/");
     }
 });
 
 function hashPassword(password) {
+    if (password == "") return "";
     return crypto.hashSync(password, 12);
 }
 

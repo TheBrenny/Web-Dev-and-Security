@@ -17,22 +17,22 @@ Based on the feedback from the first assignment, the following todo tree has bee
    - [x] Add a sell page for users
    - [x] Total cost of cart is missing
    - [ ] Add a checkout button **(contest this in the Project 2 writeup)** Maybe show a smaller looking cart on each page?
- - [ ] Confirm that all parts of the assignment follow the MVC model
-   - [ ] Turn the Database file into actual models.
+ - [x] Confirm that all parts of the assignment follow the MVC model
+   - [ x Turn the Database file into actual models.
    - [x] Make a MD file labelling all the files and stating it's role in the MVC paradigm.
  - [x] Add More Dynamic Pages
    - [x] Add 5 more dynamic pages
  - [x] Call the DB from the Controller of the MVC
    - [x] Confirm that this actually happens
    - [x] Have a "rich variety" of tables with varying data types
- - [ ] SQL Injection Prevention
-   - [ ] Use PreparedStatements to prevent SQL Injections
-   - [ ] Lookup Prepared Statements
-   - [ ] Look for more areas to prevent injection
-     - [ ] The search box!
-     - [ ] Login form
-     - [ ] Selling Box
-     - [ ] Accidental open JSON endpoints!
+ - [x] SQL Injection Prevention
+   - [x] Use PreparedStatements to prevent SQL Injections
+   - [x] Lookup Prepared Statements
+   - [x] Look for more areas to prevent injection
+     - [x] The search box!
+     - [x] Login form
+     - [x] Selling Box
+     - [x] Accidental open JSON endpoints!
  - [x] Robust and functional website
  - [x] Good presentation and easy to navigate
  - [ ] Submit zip file onto Moodle with Writeup, Project, and Database (`mysqldump`?)

@@ -1,7 +1,7 @@
 [[i= partials/header ]]
 [[i= partials/navbar ]]
 
-<div class="container" style="width: 100%;flex-flow: column;align-items: stretch;">
+<div class="container">
     <div class="flex row product">
         <div class="container center productImg">
             <img src="/assets/img/products/defaultImage.svg" alt="img">

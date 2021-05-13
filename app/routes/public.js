@@ -4,7 +4,7 @@ const helpers = require("./helpers");
 
 router.get("/", async (req, res) => {
     res.render("index", {
-        ...helpers.getPageOptions(req, await Database.getRandomAvailableProducts())
+        ...helpers.getPageOptions(req, await Database.listings.getRandomProducts())
     });
 });
 

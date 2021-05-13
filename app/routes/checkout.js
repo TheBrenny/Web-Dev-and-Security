@@ -6,7 +6,6 @@ const session = require("./session");
 
 router.get("/cart", async (req, res) => {
     res.render("cart/cart", {
-        // ...getPageOptions(req, await Database.getListedProducts(Object.keys(session(req).getCart())))
         ...helpers.getPageOptions(req, Object.values(session(req).getCart()))
     });
 });
@@ -21,7 +20,7 @@ router.post("/cart/add", async (req, res) => {
         return;
     }
 
-    let obj = await Database.getProducts(itemID);
+    let obj = (await Database.listings.getProducts(itemID));
     if (obj.length === 0) {
         res.json({
             success: false,
@@ -76,7 +75,7 @@ router.post("/cart/payment", checks.hasCart, async (req, res) => {
 });
 router.get("/cart/checkout", checks.hasCart, async (req, res) => {
     res.render("cart/checkout", {
-        ...helpers.getPageOptions(req, await Database.getProducts(session(req).getCart())),
+        ...helpers.getPageOptions(req, await Database.listings.getProducts(session(req).getCartIDs())),
         address: session(req).getAddress(),
         voucher: session(req).getVoucher()
     });

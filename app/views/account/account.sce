@@ -25,7 +25,7 @@
             [[?==]]
         </div>
     [[3=]]
-        <p>This user hasn't sold anything before.</p>
+        <p>This user isn't currently selling anything.</p>
     [[?==]]
 </div>
 

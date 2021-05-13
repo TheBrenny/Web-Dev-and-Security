@@ -77,6 +77,9 @@ const cart = {
         };
         return this.cart;
     },
+    getCartIDs() {
+        return Object.keys(this.getCart());
+    },
     addToCart(obj) {
         let cart = this.getCart();
         let inCart = cart[obj.products_id] !== undefined;
