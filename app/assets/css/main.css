@@ -223,7 +223,7 @@ input[type="submit"] {
     height: var(--height); }
     .switchBox input[type="checkbox"]:checked + label:before {
       background-color: #319757;
-      content: "A";
+      content: "Y";
       padding-left: calc(var(--width) / 8) !important; }
     .switchBox input[type="checkbox"]:checked + label:after {
       left: calc(var(--width) - var(--height) - 1px); }
@@ -237,7 +237,7 @@ input[type="submit"] {
       transition: background-color 0.3s, left 0.3s;
       margin-left: 120%; }
     .switchBox label:before {
-      content: "D";
+      content: "N";
       color: #f7f5f3;
       box-sizing: border-box;
       font-family: 'Comfortaa', 'Roboto';

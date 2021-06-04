@@ -8,7 +8,7 @@ const session = require("express-session");
 const MySQLStore = require("express-mysql-session")(session);
 
 const dbFolder = path.join(__dirname);
-const sqlFolder = path.join(dbFolder, "sql");
+const sqlFolder = path.join(dbFolder, "scripts");
 const templateFolder = path.join(dbFolder, "templates");
 
 module.exports = (async function () {

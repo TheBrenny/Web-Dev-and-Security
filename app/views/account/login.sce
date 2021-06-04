@@ -8,6 +8,10 @@
         <label for="username">Username</label>
         <input type="password" name="password" required />
         <label for="password">Password</label>
+        <div class="switchBox">
+            <input type="checkbox" name="rememberme" class="switch">
+            <label for="active">Remember Me</label>
+        </div>
         <input type="submit" value="Login">
         <a href="/register" class="btn white">Register</a>
         [[?= badLogin ]]

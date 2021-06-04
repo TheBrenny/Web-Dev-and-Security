@@ -1,6 +1,9 @@
 const router = require("express").Router();
 const Database = require("../../db/database");
 const helpers = require("./helpers");
+const rememberme = require("./rememberme");
+// This is the remember me functionality
+router.use(rememberme.rememberme);
 
 router.get("/", async (req, res) => {
     res.render("index", {

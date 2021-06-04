@@ -33,6 +33,21 @@ class AccountModel {
         return this.db.query(sql, ...vars).then(this.db.changedResponse);
     }
 
+    async getRemembered(selector) {
+        let sql = `SELECT * FROM rememberTokens WHERE selector=?`;
+        return this.db.query(sql, selector).then(this.db.firstRecord);
+    }
+
+    async setRemembered(user, selector, validatorHash) {
+        let sql = `INSERT INTO rememberTokens (selector, validator, user) VALUES (?,?,?)`;
+        return this.db.query(sql, selector, validatorHash, user).then(this.db.changedResponse);
+    }
+
+    async deleteRemembered(selector) {
+        let sql = `DELETE FROM rememberTokens WHERE selector=?`;
+        return this.db.query(sql, selector).then(this.db.changedResponse);
+    }
+
 }
 
 module.exports = AccountModel;

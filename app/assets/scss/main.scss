@@ -257,7 +257,7 @@ input[type="submit"] {
         &:checked+label {
             &:before {
                 background-color: $green;
-                content: "A";
+                content: "Y";
                 padding-left: calc(var(--width) / 8) !important;
             }
 
@@ -281,7 +281,7 @@ input[type="submit"] {
         }
 
         &:before {
-            content: "D";
+            content: "N";
             color: $white;
             box-sizing: border-box;
             font-family: 'Comfortaa', 'Roboto';

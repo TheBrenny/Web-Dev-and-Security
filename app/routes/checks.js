@@ -26,7 +26,7 @@ function isAuthed(req, res, next) {
 function isGuest(req, res, next) {
     if (session(req).isAuthed()) {
         res.status(400);
-        if (req.accepts("text/html")) redirect("/");
+        if (req.accepts("text/html")) res.redirect("/");
         else res.json({
             success: false,
             message: "This action is only for guests. Please log out first."

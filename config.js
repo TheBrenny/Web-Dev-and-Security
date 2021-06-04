@@ -40,5 +40,7 @@ module.exports.serverInfo = {
 };
 
 module.exports.session = {
+    sessionCookieName: process.env.SESSION_COOKIE_NAME || "wdsSesNam",
+    rememberCookieName: process.env.REMEMBER_COOKIE_NAME || "wdsRemNam",
     secret: process.env.SESSION_SECRET || "secret"
 };

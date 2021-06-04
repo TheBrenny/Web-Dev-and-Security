@@ -4,6 +4,7 @@ const session = require("./session");
 const crypto = require("bcrypt");
 const Database = require("../../db/database");
 const helpers = require("./helpers");
+const rememberme = require("./rememberme");
 
 router.get("/register", checks.isGuest, async (req, res) => {
     res.render("account/register", {
@@ -21,6 +22,7 @@ router.get("/login", checks.isGuest, async (req, res) => {
 
 router.get("/logout", checks.isAuthed, async (req, res) => {
     session(req).setAccount();
+    rememberme.destroyCookie(req, res);
     res.redirect("/");
 });
 
@@ -103,8 +105,9 @@ router.post("/account/:id/edit", checks.isAuthed, checks.matchingId, async (req,
 router.post("/login", checks.isGuest, async (req, res) => {
     let {
         username,
-        password
+        password,
     } = req.body;
+    let rm = req.body.rememberme;
 
     let bad = false;
     let target = (await Database.accounts.getUser(username));
@@ -125,8 +128,10 @@ router.post("/login", checks.isGuest, async (req, res) => {
     if (bad) {
         session(req).badLogin();
         res.status(401).redirect("/login");
-    } else res.redirect("/");
-
+    } else {
+        if (rm == "on") rememberme.writeCookie(req, res);
+        res.redirect("/");
+    }
 });
 
 router.post("/register", checks.isGuest, async (req, res) => {
