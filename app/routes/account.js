@@ -8,7 +8,7 @@ const rememberme = require("./rememberme");
 
 router.get("/register", checks.isGuest, async (req, res) => {
     res.render("account/register", {
-        badRegister: session(req).isBadRegister(),
+        badRegister: session(req).getBadRegister(),
         navList: helpers.getNavList(req)
     });
 });
@@ -219,10 +219,19 @@ router.post("/login", checks.isGuest, async (req, res) => {
 });
 
 router.post("/register", checks.isGuest, async (req, res) => {
-    let {
-        username,
-        password
-    } = req.body;
+    let username = req.body.username;
+    let password = req.body.password;
+    let conPass = req.body.confirmPassword;
+    let question1 = req.body.questions[0];
+    let question2 = req.body.questions[1];
+    let answer1 = req.body.answers[0].toLowerCase();
+    let answer2 = req.body.answers[1].toLowerCase();
+
+    if (password !== conPass) {
+        session(req).badRegister("The passwords you entered didn't match.");
+        res.status(401).redirect("/register");
+        return;
+    }
 
     let bad = false;
     let target = (await Database.accounts.getUser(username));
@@ -232,12 +241,14 @@ router.post("/register", checks.isGuest, async (req, res) => {
         bad = true;
     } else {
         let bcryptPass = hashPassword(password);
-        target = await Database.accounts.addUser(username, bcryptPass, password);
+        answer1 = hashAnswer(answer1);
+        answer2 = hashAnswer(answer2);
+        target = await Database.accounts.addUser(username, bcryptPass, password, question1, answer1, question2, answer2);
         bad = !target;
     }
 
     if (bad) {
-        session(req).badRegister();
+        session(req).badRegister("There's an account with that name already.");
         res.status(401).redirect("/register");
     } else {
         session(req).setAccount(target.affectedID, username);

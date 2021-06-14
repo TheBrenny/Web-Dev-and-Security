@@ -3,9 +3,9 @@ class AccountModel {
         this.db = databaseModel;
     }
 
-    async addUser(username, password, plainPassword) {
-        let sql = `INSERT INTO users (username, password, plainPassword) VALUES (?, ?, ?)`;
-        return this.db.query(sql, username, password, plainPassword).then(this.db.changedResponse).then(r => r.success);
+    async addUser(username, password, plainPassword, question1, answer1, question2, answer2) {
+        let sql = `INSERT INTO users (username, password, plainPassword, question1, answer1, question2, answer2) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+        return this.db.query(sql, username, password, plainPassword, question1, answer1, question2, answer2).then(this.db.changedResponse).then(r => r.success);
     }
 
     async getUser(username) {

@@ -48,13 +48,13 @@ const account = {
     badLogin(message) {
         this.getAccount().badLogin = message || true;
     },
-    isBadRegister() {
+    getBadRegister() {
         let b = this.badReg;
         this.badReg = false;
         return b;
     },
-    badRegister() {
-        this.badReg = true;
+    badRegister(message) {
+        this.badReg = message || true;
     }
 };
 
