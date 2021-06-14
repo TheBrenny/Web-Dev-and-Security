@@ -14,7 +14,7 @@ async function rememberme(req, _, next) {
     // get cookie
     let rmCookie = null;
     try {
-        rmCookie = req.headers.cookie.split("; ").find(e=>e.startsWith(cookieName + "="));
+        rmCookie = req.headers.cookie.split("; ").find(e => e.startsWith(cookieName + "="));
         if (rmCookie) rmCookie = rmCookie.substring((cookieName + "=").length);
     } catch (e) {
         console.log(e);
@@ -49,15 +49,25 @@ async function writeCookie(req, res) {
     await accounts.setRemembered(session(req).getAccount().id, selector, hashToken(validator));
 }
 
-async function destroyCookie(req,res) {
+async function destroyCookie(req, res) {
+    let rmCookie = null;
+    try {
+        rmCookie = req.headers.cookie.split("; ").find(e => e.startsWith(cookieName + "="));
+        if (rmCookie) rmCookie = rmCookie.substring((cookieName + "=").length);
+        if (!!rmCookie) {
+            let [selector, _] = rmCookie.split(":");
+            await accounts.deleteRemembered(selector);
+        }
+    } catch (e) {
+        console.log(e);
+    }
+    
     res.setHeader("Set-Cookie", [
         cookieName + "=",
         "Expires=" + new Date(0).toUTCString(),
         "Secure",
         "HttpOnly"
     ].join("; "));
-
-    await accounts.deleteRemembered(selector);
 }
 
 function genToken() {
