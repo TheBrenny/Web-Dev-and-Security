@@ -17,7 +17,7 @@
         </div>
         [[?= badLogin ]]
             <div class="error">
-                <p>Invalid username or password. Try again!</p>
+                <p>[[ badLogin ]]</p>
             </div>
         [[?==]]
     </form>
@@ -25,4 +25,5 @@
 
 <link rel="stylesheet" href="/assets/css/account.css">
 <script src="/assets/js/placeholder.js"></script>
+<script src="/assets/js/forgot.js"></script>
 [[i= partials/footer ]]

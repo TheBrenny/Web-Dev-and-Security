@@ -4,7 +4,6 @@ const sessionSchema = {
         id: -1,
         authed: false,
         badLogin: false,
-        badUpdate: false,
         badReg: false,
     },
     cart: {} // key is item id, value is item object
@@ -32,7 +31,6 @@ const account = {
             this.getAccount().name = name;
             this.getAccount().authed = true;
             this.getAccount().badLogin = false;
-            this.getAccount().badUpdate = false;
             this.getAccount().badRegister = false;
         }
     },
@@ -42,22 +40,14 @@ const account = {
     isAuthed() {
         return this.getAccount().authed;
     },
-    isBadUpdate() {
-        let b = this.getAccount().badUpdate;
-        this.getAccount().badUpdate = false;
-        return b;
-    },
-    badUpdate() {
-        this.getAccount().badUpdate = true;
-    },
-    isBadLogin() {
+    getBadLogin() {
         let b = this.getAccount().badLogin;
         this.getAccount().badLogin = false;
         return b;
     },
-    badLogin() {
+    badLogin(message) {
         this.setAccount.call(this);
-        this.getAccount().badLogin = true;
+        this.getAccount().badLogin = message || true;
     },
     isBadRegister() {
         let b = this.badReg;

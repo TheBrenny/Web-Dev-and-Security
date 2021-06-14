@@ -13,6 +13,11 @@
             <input class="btn white" type="reset" value="Reset">
             <a class="btn red" href="/account/[[user.id]]">Cancel</a>
         </div>
+        [[?= badLogin ]]
+            <div class="error">
+                <p>[[ badLogin ]]</p>
+            </div>
+        [[?==]]
     </form>
 </div>
 
