@@ -21,13 +21,16 @@ class AccountModel {
     async updateAccount(targetID, newDetails) {
         let vars = [];
         let sql = `UPDATE users SET `;
+        
+        sql += Object.keys(newDetails).map(e=> e + "=?").join(", ");
+        vars = Object.values(newDetails);
 
-        for (let e in Object.entries(newDetails)) {
-            sql += `${e[0]}=? `;
-            vars.push(e[1]);
-        }
+        // for (let e of Object.entries(newDetails)) {
+        //     sql += `${e[0]}=? `;
+        //     vars.push(e[1]);
+        // }
 
-        sql += `WHERE id=?`;
+        sql += ` WHERE id=?`;
         vars.push(targetID);
 
         return this.db.query(sql, ...vars).then(this.db.changedResponse);
@@ -48,6 +51,10 @@ class AccountModel {
         return this.db.query(sql, selector).then(this.db.changedResponse);
     }
 
+    async getSecurityQuestions(userID) {
+        let sql = `SELECT * FROM users WHERE id=? AND active=1`;
+        return this.db.query(sql, userID).then(this.db.firstRecord);
+    }
 }
 
 module.exports = AccountModel;
