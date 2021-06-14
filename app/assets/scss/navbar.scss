@@ -6,6 +6,7 @@ $navLineHeightMin: 0.1em;
 $navLineHeightMax: 0.3em;
 
 .navbar {
+    z-index: 99;
     width: 100%;
     // background:
     //     radial-gradient(75% 50% at bottom, rgba(0, 0, 0, 0.2) 0%, transparent 30%),
