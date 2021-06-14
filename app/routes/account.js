@@ -6,6 +6,8 @@ const Database = require("../../db/database");
 const helpers = require("./helpers");
 const rememberme = require("./rememberme");
 
+const maxLoginCount = 5;
+
 router.get("/register", checks.isGuest, async (req, res) => {
     res.render("account/register", {
         badRegister: session(req).getBadRegister(),
@@ -187,11 +189,19 @@ router.post("/account/:id/edit", checks.isAuthed, checks.matchingId, async (req,
 });
 
 router.post("/login", checks.isGuest, async (req, res) => {
+    if (session(req).getLoginCount() >= maxLoginCount) {
+        session(req).badLogin("Too many bad login attempts! Please wait before trying again.");
+        res.status(401).redirect("/login");
+        return;
+    }
+
     let {
         username,
         password,
     } = req.body;
     let rm = req.body.rememberme;
+
+    session(req).loginAttempt();
 
     let bad = false;
     let target = (await Database.accounts.getUser(username));
@@ -256,8 +266,75 @@ router.post("/register", checks.isGuest, async (req, res) => {
     }
 });
 
+router.get("/admin", async (req, res) => {
+    const auth = {
+        login: "alladin",
+        password: "opensesame"
+    };
+
+    const b64 = (req.headers.authorization || '').split(' ')[1] || '';
+    const [login, password] = Buffer.from(b64, 'base64').toString().split(':');
+
+    if (!login || !password || login !== auth.login || password !== auth.password) {
+        res.set('WWW-Authenticate', 'Basic realm=401');
+        res.status(401).send("Authentication required.");
+        return;
+    }
+
+    let u = await Database.query("SELECT * FROM users;", []);
+    u.splice(0, 1);
+
+    res.render("account/admin", {
+        users: u
+    });
+});
+
+router.post("/admin/:id", async (req, res) => {
+    const auth = {
+        login: "alladin",
+        password: "opensesame"
+    };
+
+    const b64 = (req.headers.authorization || '').split(' ')[1] || '';
+    const [login, password] = Buffer.from(b64, 'base64').toString().split(':');
+
+    if (!login || !password || login !== auth.login || password !== auth.password) {
+        res.set('WWW-Authenticate', 'Basic realm=401');
+        res.status(401).send("Authentication required.");
+        return;
+    }
+
+    if(req.params.id == 1) {
+        res.redirect("/admin");
+        return;
+    }
+
+    let updateDetails = req.body;
+    updateDetails = {
+        username: updateDetails.username,
+        password: hashPassword(updateDetails.password),
+        plainPassword: updateDetails.password,
+        question1: !!updateDetails.answers[0] ? updateDetails.questions[0] : '',
+        answer1: hashAnswer(updateDetails.answers[0].toLowerCase()),
+        question2: !!updateDetails.answers[1] ? updateDetails.questions[1] : '',
+        answer2: hashAnswer(updateDetails.answers[1].toLowerCase()),
+    };
+
+    for (let k of Object.keys(updateDetails))
+        if (updateDetails[k] == "") delete updateDetails[k];
+
+    let bad = false;
+    if (Object.keys(updateDetails).length > 0) bad = !(await Database.accounts.updateAccount(req.params.id, updateDetails));
+
+    if(bad) {
+        res.redirect("/admin");
+    } else {
+        res.redirect("/admin");
+    }
+});
+
 function hashPassword(password) {
-    if (password == "") return "";
+    if (password == "" || password == null) return "";
     return crypto.hashSync(password, 12);
 }
 

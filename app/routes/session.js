@@ -5,6 +5,7 @@ const sessionSchema = {
         authed: false,
         badLogin: false,
         badReg: false,
+        loginCount: 0
     },
     cart: {} // key is item id, value is item object
 };
@@ -32,6 +33,7 @@ const account = {
             this.getAccount().authed = true;
             this.getAccount().badLogin = false;
             this.getAccount().badRegister = false;
+            this.getAccount().loginCount = 0;
         }
     },
     name() {
@@ -55,6 +57,12 @@ const account = {
     },
     badRegister(message) {
         this.badReg = message || true;
+    },
+    loginAttempt() {
+        this.getAccount().loginCount++;
+    },
+    getLoginCount() {
+        return this.getAccount().loginCount;
     }
 };
 

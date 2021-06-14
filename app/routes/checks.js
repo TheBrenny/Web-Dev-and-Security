@@ -6,7 +6,6 @@ function matchingId(req, _res, next) {
         let e = new Error("You don't seem to be the right user to access this operation");
         e.statusCode = 403;
         throw e;
-        // statusCode: 403,
     }
 }
 
