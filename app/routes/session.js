@@ -46,7 +46,6 @@ const account = {
         return b;
     },
     badLogin(message) {
-        this.setAccount.call(this);
         this.getAccount().badLogin = message || true;
     },
     isBadRegister() {
@@ -55,7 +54,6 @@ const account = {
         return b;
     },
     badRegister() {
-        this.setAccount.call(this);
         this.badReg = true;
     }
 };
