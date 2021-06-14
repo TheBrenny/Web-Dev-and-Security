@@ -5,7 +5,12 @@
             "label":"startMysql",
             "command": "${workspaceFolder}/db/tools/mysql.bat",
             "args": ["skip"],
-            "type": "process"
+            "type": "process",
+            "presentation": {
+                "reveal": "silent",
+                "clear": false,
+                "close": true
+            }
         }
     ]
 }
