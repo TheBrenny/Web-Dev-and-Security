@@ -9,6 +9,7 @@
         <ul>
             <li>Mobile - 0412 356 789</li>
             <li>Email - <a href="mailto:admin@quickmark.net">admin@quickmark.net</a></li>
+            <li>Author - Jarod Brennfleck (z5217759)</li>
         </ul>
     </div>
 </div>
