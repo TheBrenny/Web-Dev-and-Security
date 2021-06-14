@@ -14,6 +14,7 @@
         <hr>
         <input type="password" name="newPassword" value="" placeholder="New Password" required />
         <input type="password" name="confirmPassword" value="" placeholder="Confirm Password" required />
+        <hr>
         <div class="actions flex row">
             <input class="btn" type="submit" value="Recover">
             <a class="btn red" href="/account/[[user.id]]">Cancel</a>

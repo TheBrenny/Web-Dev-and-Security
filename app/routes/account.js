@@ -128,9 +128,12 @@ router.get("/account/:id/all", async (req, res) => {
 });
 
 router.get("/account/:id/edit", checks.isAuthed, checks.matchingId, async (req, res) => {
+    let user = await Database.accounts.getSecurityQuestionsByID(req.params.id);
+
     res.render("account/edit", {
         ...helpers.getPageOptions(req, []),
-        badLogin: session(req).getBadLogin()
+        badLogin: session(req).getBadLogin(),
+        questions: [user.users_question1, user.users_question2]
     });
 });
 
@@ -142,12 +145,16 @@ router.post("/account/:id/edit", checks.isAuthed, checks.matchingId, async (req,
 
     // found user
     if (!bad && target != null) {
-        const passMatch = updateDetails.currentPassword == target.users_plainPassword; //bcrypt.compareSync(password, target[0].password);
+        const passMatch = crypto.compareSync(updateDetails.currentPassword, target.users_password); // updateDetails.currentPassword == target.users_plainPassword;
         if (passMatch) {
             updateDetails = {
                 username: updateDetails.username,
                 password: hashPassword(updateDetails.newPassword),
-                plainPassword: updateDetails.newPassword
+                plainPassword: updateDetails.newPassword,
+                question1: !!updateDetails.answers[0] ? updateDetails.questions[0] : '',
+                answer1: hashAnswer(updateDetails.answers[0].toLowerCase()),
+                question2: !!updateDetails.answers[1] ? updateDetails.questions[1] : '',
+                answer2: hashAnswer(updateDetails.answers[1].toLowerCase()),
             };
 
             for (let k of Object.keys(updateDetails))
@@ -191,7 +198,7 @@ router.post("/login", checks.isGuest, async (req, res) => {
 
     // found user
     if (target != undefined) {
-        const passMatch = password == target.users_plainPassword; //bcrypt.compareSync(password, target[0].password);
+        const passMatch = crypto.compareSync(password, target.users_password); // password == target.users_plainPassword
         if (passMatch) {
             session(req).setAccount(target.users_id, target.users_username);
         } else {
@@ -226,7 +233,7 @@ router.post("/register", checks.isGuest, async (req, res) => {
     } else {
         let bcryptPass = hashPassword(password);
         target = await Database.accounts.addUser(username, bcryptPass, password);
-        bad = !target.success;
+        bad = !target;
     }
 
     if (bad) {
@@ -241,6 +248,11 @@ router.post("/register", checks.isGuest, async (req, res) => {
 function hashPassword(password) {
     if (password == "") return "";
     return crypto.hashSync(password, 12);
+}
+
+function hashAnswer(answer) {
+    if (answer == "") return "";
+    return crypto.hashSync(answer, 4);
 }
 
 module.exports = router;
