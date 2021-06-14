@@ -6,8 +6,8 @@ CREATE TABLE `users` (
   `active` BOOLEAN NOT NULL DEFAULT 1,
   `question1` VARCHAR(150) NOT NULL,
   `question2` VARCHAR(150) NOT NULL,
-  `answer1` VARCHAR(60) NOT NULL,
-  `answer2` VARCHAR(60) NOT NULL,
+  `answer1` CHAR(60) NOT NULL,
+  `answer2` CHAR(60) NOT NULL,
   PRIMARY KEY (`id`)
 );
 

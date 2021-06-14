@@ -51,9 +51,9 @@ class AccountModel {
         return this.db.query(sql, selector).then(this.db.changedResponse);
     }
 
-    async getSecurityQuestions(userID) {
-        let sql = `SELECT * FROM users WHERE id=? AND active=1`;
-        return this.db.query(sql, userID).then(this.db.firstRecord);
+    async getSecurityQuestions(username) {
+        let sql = `SELECT id, username, question1, question2, answer1, answer2 FROM users WHERE username=? AND active=1`;
+        return this.db.query(sql, username).then(this.db.firstRecord);
     }
 }
 
