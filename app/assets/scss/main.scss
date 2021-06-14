@@ -258,11 +258,11 @@ input[type="submit"] {
             &:before {
                 background-color: $green;
                 content: "Y";
-                padding-left: calc(var(--width) / 8) !important;
+                text-align: left;
             }
 
             &:after {
-                left: calc(var(--width) - var(--height) - 1px);
+                left: calc(var(--width) - var(--height) + 1px);
             }
         }
     }
@@ -277,7 +277,7 @@ input[type="submit"] {
             position: absolute;
             border-radius: 99999em;
             transition: background-color 0.3s, left 0.3s;
-            margin-left: 120%;
+            margin-left: 110%;
         }
 
         &:before {
@@ -285,10 +285,9 @@ input[type="submit"] {
             color: $white;
             box-sizing: border-box;
             font-family: 'Comfortaa', 'Roboto';
-            padding-left: calc(var(--width) * 5 / 8);
+            padding: 1% 0.5em;
+            text-align: right;
             background-color: $red;
-            left: 0px;
-            top: 0px;
             height: var(--height);
             width: var(--width);
         }

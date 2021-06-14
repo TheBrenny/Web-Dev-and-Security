@@ -224,9 +224,9 @@ input[type="submit"] {
     .switchBox input[type="checkbox"]:checked + label:before {
       background-color: #319757;
       content: "Y";
-      padding-left: calc(var(--width) / 8) !important; }
+      text-align: left; }
     .switchBox input[type="checkbox"]:checked + label:after {
-      left: calc(var(--width) - var(--height) - 1px); }
+      left: calc(var(--width) - var(--height) + 1px); }
   .switchBox label {
     position: relative;
     line-height: var(--height);
@@ -235,16 +235,15 @@ input[type="submit"] {
       position: absolute;
       border-radius: 99999em;
       transition: background-color 0.3s, left 0.3s;
-      margin-left: 120%; }
+      margin-left: 110%; }
     .switchBox label:before {
       content: "N";
       color: #f7f5f3;
       box-sizing: border-box;
       font-family: 'Comfortaa', 'Roboto';
-      padding-left: calc(var(--width) * 5 / 8);
+      padding: 1% 0.5em;
+      text-align: right;
       background-color: #E85F5C;
-      left: 0px;
-      top: 0px;
       height: var(--height);
       width: var(--width); }
     .switchBox label:after {
