@@ -14,6 +14,12 @@ let readScript = (s, vars) => {
 };
 let prom = Promise.resolve();
 
+if(process.argv.length == 2) {
+    console.log("Please provide some actions:");
+    console.log(["  cleanDB", "  installDB", "  demoDB"].join("\n"));
+    process.exit(0);
+}
+
 if (process.argv.includes("cleanDB")) {
     prom = prom.then(() => {
             let sql = readScript("clean.sql", {
