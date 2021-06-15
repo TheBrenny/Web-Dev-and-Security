@@ -121,6 +121,12 @@ router.post("/sell", [
         body("cost").trim().escape().toFloat().isNumeric().custom(v => v >= 0)
     ],
     async (req, res) => {
+        let vr = validationResult(req);
+        if (!vr.isEmpty()) {
+            res.status(400).redirect("/sell");
+            return;
+        }
+
         let sess = session(req);
 
         if (!sess.isAuthed()) {

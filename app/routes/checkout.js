@@ -77,6 +77,11 @@ router.post("/cart/shipping", [
         }),
     ],
     async (req, res) => {
+        let vr = validationResult(req);
+        if (!vr.isEmpty()) {
+            res.status(400).redirect("/cart/shipping");
+            return;
+        }
         session(req).setAddress(req.body.street, req.body.town, req.body.suburb);
         res.redirect("/cart/payment");
     });
