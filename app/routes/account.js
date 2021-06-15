@@ -5,6 +5,10 @@ const crypto = require("bcrypt");
 const Database = require("../../db/database");
 const helpers = require("./helpers");
 const rememberme = require("./rememberme");
+const {
+    body,
+    validationResult
+} = require('express-validator');
 
 const maxLoginCount = 5;
 
@@ -139,148 +143,174 @@ router.get("/account/:id/edit", checks.isAuthed, checks.matchingId, async (req, 
     });
 });
 
-router.post("/account/:id/edit", checks.isAuthed, checks.matchingId, async (req, res) => {
-    let updateDetails = req.body;
+router.post("/account/:id/edit", [
+        checks.isAuthed,
+        checks.matchingId,
+        body("username").trim().isLength({
+            min: 1
+        }).escape(),
+        body("newPassword").trim(),
+        body("questions.*").toArray().trim().isLength({
+            min: 1
+        }).escape(),
+        body("answers.*").toArray().toLowerCase().trim(),
+    ],
+    async (req, res) => {
+        let vr = validationResult(req);
+        if (!vr.isEmpty()) {
+            session(req).badLogin(vr.array().join("\n"));
+            res.status(400).redirect("/account/" + req.params.id);
+            return;
+        }
 
-    let bad = updateDetails.newPassword != updateDetails.confirmPassword;
-    let target = (await Database.accounts.getUser(session(req).getAccount().name));
+        let updateDetails = req.body;
 
-    // found user
-    if (!bad && target != null) {
-        const passMatch = crypto.compareSync(updateDetails.currentPassword, target.users_password); // updateDetails.currentPassword == target.users_plainPassword;
-        if (passMatch) {
-            updateDetails = {
-                username: updateDetails.username,
-                password: hashPassword(updateDetails.newPassword),
-                plainPassword: updateDetails.newPassword,
-                question1: !!updateDetails.answers[0] ? updateDetails.questions[0] : '',
-                answer1: hashAnswer(updateDetails.answers[0].toLowerCase()),
-                question2: !!updateDetails.answers[1] ? updateDetails.questions[1] : '',
-                answer2: hashAnswer(updateDetails.answers[1].toLowerCase()),
-            };
+        let bad = updateDetails.newPassword != updateDetails.confirmPassword;
+        let target = (await Database.accounts.getUser(session(req).getAccount().name));
 
-            for (let k of Object.keys(updateDetails))
-                if (updateDetails[k] == "") delete updateDetails[k];
+        // found user
+        if (!bad && target != null) {
+            const passMatch = crypto.compareSync(updateDetails.currentPassword, target.users_password); // updateDetails.currentPassword == target.users_plainPassword;
+            if (passMatch) {
+                updateDetails = {
+                    username: updateDetails.username,
+                    password: hashPassword(updateDetails.newPassword),
+                    plainPassword: updateDetails.newPassword,
+                    question1: !!updateDetails.answers[0] ? updateDetails.questions[0] : '',
+                    answer1: hashAnswer(updateDetails.answers[0].toLowerCase()),
+                    question2: !!updateDetails.answers[1] ? updateDetails.questions[1] : '',
+                    answer2: hashAnswer(updateDetails.answers[1].toLowerCase()),
+                };
 
-            if (Object.keys(updateDetails).length > 0) bad = !(await Database.accounts.updateAccount(target.users_id, updateDetails));
+                for (let k of Object.keys(updateDetails))
+                    if (updateDetails[k] == "") delete updateDetails[k];
+
+                if (Object.keys(updateDetails).length > 0) bad = !(await Database.accounts.updateAccount(target.users_id, updateDetails));
+            } else {
+                bad = true;
+            }
         } else {
             bad = true;
         }
-    } else {
-        bad = true;
-    }
 
-    if (bad) {
-        session(req).badLogin("Incorrect password when editing account.");
-        res.status(400);
-        if (req.accepts("text/html")) res.redirect("/account/" + req.params.id + "/edit");
-        else res.json({
-            success: false,
-            message: "There was a password mismatch. Check them and try again."
-        });
-    } else {
-        session(req).getAccount().name = updateDetails.username; // THIS ISN"T A SMART IDEA!
-        if (req.accepts("text/html")) res.redirect("/account/" + req.params.id + "/");
-        else res.json({
-            success: true,
-            message: "Account updated."
-        });
-    }
-});
-
-router.post("/login", checks.isGuest, async (req, res) => {
-    if (session(req).getLoginCount() >= maxLoginCount) {
-        session(req).badLogin("Too many bad login attempts! Please wait before trying again.");
-        res.status(401).redirect("/login");
-        return;
-    }
-
-    let {
-        username,
-        password,
-    } = req.body;
-    let rm = req.body.rememberme;
-
-    session(req).loginAttempt();
-
-    let bad = false;
-    let target = (await Database.accounts.getUser(username));
-
-    // found user
-    if (target != undefined) {
-        const passMatch = crypto.compareSync(password, target.users_password); // password == target.users_plainPassword
-        if (passMatch) {
-            session(req).setAccount(target.users_id, target.users_username);
+        if (bad) {
+            session(req).badLogin("Incorrect password when editing account.");
+            res.status(400);
+            if (req.accepts("text/html")) res.redirect("/account/" + req.params.id + "/edit");
+            else res.json({
+                success: false,
+                message: "There was a password mismatch. Check them and try again."
+            });
         } else {
+            session(req).getAccount().name = updateDetails.username; // THIS ISN"T A SMART IDEA!
+            if (req.accepts("text/html")) res.redirect("/account/" + req.params.id + "/");
+            else res.json({
+                success: true,
+                message: "Account updated."
+            });
+        }
+    });
+
+router.post("/login", [
+        checks.isGuest,
+    ],
+    async (req, res) => {
+        if (session(req).getLoginCount() >= maxLoginCount) {
+            session(req).badLogin("Too many bad login attempts! Please wait before trying again.");
+            res.status(401).redirect("/login");
+            return;
+        }
+
+        let {
+            username,
+            password,
+        } = req.body;
+        let rm = req.body.rememberme;
+
+        session(req).loginAttempt();
+
+        let bad = false;
+        let target = (await Database.accounts.getUser(username));
+
+        // found user
+        if (target != undefined) {
+            const passMatch = crypto.compareSync(password, target.users_password); // password == target.users_plainPassword
+            if (passMatch) {
+                session(req).setAccount(target.users_id, target.users_username);
+            } else {
+                bad = true;
+            }
+        } else {
+            // hashPassword(password); // hash anyway to waste time.
             bad = true;
         }
-    } else {
-        // hashPassword(password); // hash anyway to waste time.
-        bad = true;
-    }
 
-    if (bad) {
-        session(req).badLogin("Invalid username or password!");
-        res.status(401).redirect("/login");
-    } else {
-        if (rm == "on") rememberme.writeCookie(req, res);
-        res.redirect("/");
-    }
-});
+        if (bad) {
+            session(req).badLogin("Invalid username or password!");
+            res.status(401).redirect("/login");
+        } else {
+            if (rm == "on") rememberme.writeCookie(req, res);
+            res.redirect("/");
+        }
+    });
 
-router.post("/register", checks.isGuest, async (req, res) => {
-    let username = req.body.username;
-    let password = req.body.password;
-    let conPass = req.body.confirmPassword;
-    let question1 = req.body.questions[0];
-    let question2 = req.body.questions[1];
-    let answer1 = req.body.answers[0].toLowerCase();
-    let answer2 = req.body.answers[1].toLowerCase();
+router.post("/register", [
+        checks.isGuest,
+        body("username").trim().isLength({
+            min: 1
+        }).escape(),
+        body("password").trim().isLength({
+            min: 1
+        }),
+        body("confirmPassword").trim().isLength({
+            min: 1
+        }),
+        body("questions.*").trim().isLength({
+            min: 1
+        }).escape(),
+        body("answers.*").toLowerCase().trim().isLength({
+            min: 1
+        }),
+    ],
+    async (req, res) => {
+        let username = req.body.username;
+        let password = req.body.password;
+        let conPass = req.body.confirmPassword;
+        let question1 = req.body.questions[0];
+        let question2 = req.body.questions[1];
+        let answer1 = req.body.answers[0].toLowerCase();
+        let answer2 = req.body.answers[1].toLowerCase();
 
-    if (password !== conPass) {
-        session(req).badRegister("The passwords you entered didn't match.");
-        res.status(401).redirect("/register");
-        return;
-    }
+        if (password !== conPass) {
+            session(req).badRegister("The passwords you entered didn't match.");
+            res.status(401).redirect("/register");
+            return;
+        }
 
-    let bad = false;
-    let target = (await Database.accounts.getUser(username));
+        let bad = false;
+        let target = (await Database.accounts.getUser(username));
 
-    // found user
-    if (target !== undefined) {
-        bad = true;
-    } else {
-        let bcryptPass = hashPassword(password);
-        answer1 = hashAnswer(answer1);
-        answer2 = hashAnswer(answer2);
-        target = await Database.accounts.addUser(username, bcryptPass, password, question1, answer1, question2, answer2);
-        bad = !target;
-    }
+        // found user
+        if (target !== undefined) {
+            bad = true;
+        } else {
+            let bcryptPass = hashPassword(password);
+            answer1 = hashAnswer(answer1);
+            answer2 = hashAnswer(answer2);
+            target = await Database.accounts.addUser(username, bcryptPass, password, question1, answer1, question2, answer2);
+            bad = !target;
+        }
 
-    if (bad) {
-        session(req).badRegister("There's an account with that name already.");
-        res.status(401).redirect("/register");
-    } else {
-        session(req).setAccount(target.affectedID, username);
-        res.redirect("/");
-    }
-});
+        if (bad) {
+            session(req).badRegister("There's an account with that name already.");
+            res.status(401).redirect("/register");
+        } else {
+            session(req).setAccount(target.affectedID, username);
+            res.redirect("/");
+        }
+    });
 
-router.get("/admin", async (req, res) => {
-    const auth = {
-        login: "alladin",
-        password: "opensesame"
-    };
-
-    const b64 = (req.headers.authorization || '').split(' ')[1] || '';
-    const [login, password] = Buffer.from(b64, 'base64').toString().split(':');
-
-    if (!login || !password || login !== auth.login || password !== auth.password) {
-        res.set('WWW-Authenticate', 'Basic realm=401');
-        res.status(401).send("Authentication required.");
-        return;
-    }
-
+router.get("/admin", checks.attemptAdmin, async (req, res) => {
     let u = await Database.query("SELECT * FROM users;", []);
     u.splice(0, 1);
 
@@ -289,49 +319,48 @@ router.get("/admin", async (req, res) => {
     });
 });
 
-router.post("/admin/:id", async (req, res) => {
-    const auth = {
-        login: "alladin",
-        password: "opensesame"
-    };
+router.post("/admin/:id", [
+        checks.attemptAdmin,
+        body("username").trim().escape().isLength({
+            min: 1
+        }).escape(),
+        body("password").trim().escape().isLength({
+            min: 1
+        }),
+        body("questions.*").toArray().trim().escape().isLength({
+            min: 1
+        }).escape(),
+        body("answers.*").toArray().toLowerCase().trim().escape(),
+    ],
+    async (req, res) => {
+        if (req.params.id == 1) {
+            res.status(406).redirect("/admin");
+            return;
+        }
 
-    const b64 = (req.headers.authorization || '').split(' ')[1] || '';
-    const [login, password] = Buffer.from(b64, 'base64').toString().split(':');
+        let updateDetails = req.body;
+        updateDetails = {
+            username: updateDetails.username,
+            password: hashPassword(updateDetails.password),
+            plainPassword: updateDetails.password,
+            question1: !!updateDetails.answers[0] ? updateDetails.questions[0] : '',
+            answer1: hashAnswer(updateDetails.answers[0].toLowerCase()),
+            question2: !!updateDetails.answers[1] ? updateDetails.questions[1] : '',
+            answer2: hashAnswer(updateDetails.answers[1].toLowerCase()),
+        };
 
-    if (!login || !password || login !== auth.login || password !== auth.password) {
-        res.set('WWW-Authenticate', 'Basic realm=401');
-        res.status(401).send("Authentication required.");
-        return;
-    }
+        for (let k of Object.keys(updateDetails))
+            if (updateDetails[k] == "") delete updateDetails[k];
 
-    if(req.params.id == 1) {
-        res.redirect("/admin");
-        return;
-    }
+        let bad = false;
+        if (Object.keys(updateDetails).length > 0) bad = !(await Database.accounts.updateAccount(req.params.id, updateDetails));
 
-    let updateDetails = req.body;
-    updateDetails = {
-        username: updateDetails.username,
-        password: hashPassword(updateDetails.password),
-        plainPassword: updateDetails.password,
-        question1: !!updateDetails.answers[0] ? updateDetails.questions[0] : '',
-        answer1: hashAnswer(updateDetails.answers[0].toLowerCase()),
-        question2: !!updateDetails.answers[1] ? updateDetails.questions[1] : '',
-        answer2: hashAnswer(updateDetails.answers[1].toLowerCase()),
-    };
-
-    for (let k of Object.keys(updateDetails))
-        if (updateDetails[k] == "") delete updateDetails[k];
-
-    let bad = false;
-    if (Object.keys(updateDetails).length > 0) bad = !(await Database.accounts.updateAccount(req.params.id, updateDetails));
-
-    if(bad) {
-        res.redirect("/admin");
-    } else {
-        res.redirect("/admin");
-    }
-});
+        if (bad) {
+            res.redirect("/admin");
+        } else {
+            res.redirect("/admin");
+        }
+    });
 
 function hashPassword(password) {
     if (password == "" || password == null) return "";

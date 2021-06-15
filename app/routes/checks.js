@@ -44,9 +44,26 @@ function hasCart(req, res, next) {
     } else next();
 }
 
+function attemptAdmin(req, res, next) {
+    const auth = {
+        login: "alladin",
+        password: "opensesame"
+    };
+
+    const b64 = (req.headers.authorization || '').split(' ')[1] || '';
+    const [login, password] = Buffer.from(b64, 'base64').toString().split(':');
+
+    if (!login || !password || login !== auth.login || password !== auth.password) {
+        res.set('WWW-Authenticate', 'Basic realm=401');
+        res.status(401).send("Authentication required.");
+        return;
+    } else next();
+}
+
 module.exports = {
     matchingId,
     isAuthed,
     isGuest,
     hasCart,
+    attemptAdmin
 };
