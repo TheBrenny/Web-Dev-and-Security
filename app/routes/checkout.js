@@ -3,6 +3,10 @@ const helpers = require("./helpers");
 const Database = require("../../db/database");
 const checks = require("./checks");
 const session = require("./session");
+const {
+    body,
+    validationResult
+} = require('express-validator');
 
 router.get("/cart", async (req, res) => {
     res.render("cart/cart", {
@@ -60,19 +64,37 @@ router.get("/cart/shipping", checks.hasCart, async (req, res) => {
         ...helpers.getPageOptions(req)
     });
 });
-router.post("/cart/shipping", checks.hasCart, async (req, res) => {
-    session(req).setAddress(req.body.street, req.body.town, req.body.suburb);
-    res.redirect("/cart/payment");
-});
+router.post("/cart/shipping", [
+        checks.hasCart,
+        body("street").trim().escape().isLength({
+            min: 1
+        }),
+        body("town").trim().escape().isLength({
+            min: 1
+        }),
+        body("suburb").trim().escape().isLength({
+            min: 1
+        }),
+    ],
+    async (req, res) => {
+        session(req).setAddress(req.body.street, req.body.town, req.body.suburb);
+        res.redirect("/cart/payment");
+    });
+
 router.get("/cart/payment", async (req, res) => {
     res.render("cart/payment", {
         ...helpers.getPageOptions(req)
     });
 });
-router.post("/cart/payment", checks.hasCart, async (req, res) => {
-    session(req).setVoucher(req.body.voucher);
-    res.redirect("/cart/checkout");
-});
+router.post("/cart/payment", [
+        checks.hasCart,
+        body("voucher").trim().escape(),
+    ],
+    async (req, res) => {
+        session(req).setVoucher(req.body.voucher);
+        res.redirect("/cart/checkout");
+    });
+
 router.get("/cart/checkout", checks.hasCart, async (req, res) => {
     res.render("cart/checkout", {
         ...helpers.getPageOptions(req, await Database.listings.getProducts(session(req).getCartIDs())),
